@@ -1,0 +1,9 @@
+# ninja log v6
+11	1273	8076270370462169	SmartBackupManager_autogen/timestamp	71e5d5c47ded5177
+1299	5886	8076270371782164	CMakeFiles/SmartBackupManager.dir/mainwindow.cpp.obj	15852ad2a9d67bfb
+11	1273	8076270370462169	SmartBackupManager_autogen/mocs_compilation.cpp	71e5d5c47ded5177
+11	1273	8076270370462169	C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/build/Desktop_Qt_6_9_3_MinGW_64_bit-Debug/SmartBackupManager_autogen/timestamp	71e5d5c47ded5177
+11	1273	8076270370462169	C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/build/Desktop_Qt_6_9_3_MinGW_64_bit-Debug/SmartBackupManager_autogen/mocs_compilation.cpp	71e5d5c47ded5177
+1284	5811	8076270371632196	CMakeFiles/SmartBackupManager.dir/SmartBackupManager_autogen/mocs_compilation.cpp.obj	fc0b287e470b9225
+1291	5885	8076270371702162	CMakeFiles/SmartBackupManager.dir/main.cpp.obj	40855ebb3821da02
+5886	6469	8076270417657275	SmartBackupManager.exe	35d5d08041df876e
