@@ -268,10 +268,12 @@ void MainWindow::handleStartBackup()
             tr(
                 "Backup completed successfully.\n\n"
                 "Files copied: %1\n"
-                "Files skipped: %2\n\n"
-                "Backup location:\n%3"
+                "Files verified: %2\n"
+                "Files skipped: %3\n\n"
+                "Backup location:\n%4"
                 )
                 .arg(result.copiedFiles)
+                .arg(result.verifiedFiles)
                 .arg(result.skippedFiles)
                 .arg(result.backupPath)
             );
@@ -295,13 +297,17 @@ void MainWindow::handleStartBackup()
         this,
         tr("Backup Completed With Errors"),
         tr(
-            "Some files could not be backed up.\n\n"
+            "The backup completed with errors.\n\n"
             "Copied: %1\n"
-            "Failed: %2\n"
-            "Skipped: %3"
+            "Verified: %2\n"
+            "Copy failures: %3\n"
+            "Integrity failures: %4\n"
+            "Skipped: %5"
             )
                 .arg(result.copiedFiles)
+                .arg(result.verifiedFiles)
                 .arg(result.failedFiles)
+                .arg(result.integrityFailures)
                 .arg(result.skippedFiles)
             + details
         );

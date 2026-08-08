@@ -14,6 +14,10 @@ qt_add_executable(SmartBackupManager
     .gitignore
     core/backup/BackupService.h
     core/backup/BackupService.cpp
+    core/hashing/HashService.h
+    core/hashing/HashService.cpp
+
+
 )
 
 target_link_libraries(SmartBackupManager

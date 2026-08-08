@@ -11,7 +11,11 @@ struct BackupResult
     QString backupPath;
 
     int copiedFiles = 0;
+    int verifiedFiles = 0;
+
     int failedFiles = 0;
+    int integrityFailures = 0;
+
     int skippedFiles = 0;
 
     QStringList errors;

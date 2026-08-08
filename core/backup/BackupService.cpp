@@ -5,6 +5,7 @@
 #include <QDirIterator>
 #include <QFile>
 #include <QFileInfo>
+#include "../hashing/HashService.h"
 
 BackupResult BackupService::createBackup(
     const QString &sourcePath,
@@ -137,27 +138,49 @@ BackupResult BackupService::createBackup(
 
             QString errorMessage;
 
-            if (copyFile(
+            if (!copyFile(
                     absoluteSourcePath,
                     targetPath,
                     errorMessage
                     )) {
-
-                result.copiedFiles++;
-
-            } else {
 
                 result.failedFiles++;
 
                 result.errors.append(
                     errorMessage
                     );
+
+                continue;
+            }
+
+            result.copiedFiles++;
+
+            HashService hashService;
+
+            QString verificationError;
+
+            if (hashService.verifyFiles(
+                    absoluteSourcePath,
+                    targetPath,
+                    verificationError
+                    )) {
+
+                result.verifiedFiles++;
+
+            } else {
+
+                result.integrityFailures++;
+
+                result.errors.append(
+                    verificationError
+                    );
             }
         }
     }
 
     result.success =
-        result.failedFiles == 0;
+        result.failedFiles == 0 &&
+        result.integrityFailures == 0;
 
     return result;
 }

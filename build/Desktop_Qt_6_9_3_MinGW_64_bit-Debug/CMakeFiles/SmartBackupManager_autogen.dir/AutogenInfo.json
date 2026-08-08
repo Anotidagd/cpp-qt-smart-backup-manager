@@ -354,6 +354,12 @@
 			null
 		],
 		[
+			"C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/core/hashing/HashService.h",
+			"MU",
+			"2P7PA6VZRM/moc_HashService.cpp",
+			null
+		],
+		[
 			"C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/mainwindow.h",
 			"MU",
 			"EWIEGA46WW/moc_mainwindow.cpp",
@@ -432,6 +438,11 @@
 	[
 		[
 			"C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/core/backup/BackupService.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/core/hashing/HashService.cpp",
 			"MU",
 			null
 		],
