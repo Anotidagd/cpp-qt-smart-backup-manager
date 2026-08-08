@@ -12,6 +12,8 @@ qt_add_executable(SmartBackupManager
     mainwindow.h
     mainwindow.ui
     .gitignore
+    core/backup/BackupService.h
+    core/backup/BackupService.cpp
 )
 
 target_link_libraries(SmartBackupManager

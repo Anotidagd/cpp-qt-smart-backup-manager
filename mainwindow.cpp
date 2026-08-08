@@ -6,6 +6,7 @@
 #include <QFileInfo>
 #include <QMessageBox>
 #include <QPushButton>
+#include "core/backup/BackupService.h"
 
 namespace
 {
@@ -223,6 +224,7 @@ void MainWindow::handleStartBackup()
     QString errorMessage;
 
     if (!validatePaths(&errorMessage)) {
+
         QMessageBox::warning(
             this,
             tr("Invalid Backup Configuration"),
@@ -232,12 +234,75 @@ void MainWindow::handleStartBackup()
         return;
     }
 
-    QMessageBox::information(
+    const QString sourcePath =
+        ui->sourcePathEdit->text();
+
+    const QString destinationPath =
+        ui->destinationPathEdit->text();
+
+    ui->startBackupButton->setEnabled(false);
+
+    statusBar()->showMessage(
+        "Backup in progress..."
+        );
+
+    BackupService backupService;
+
+    const BackupResult result =
+        backupService.createBackup(
+            sourcePath,
+            destinationPath
+            );
+
+    ui->startBackupButton->setEnabled(true);
+
+    if (result.success) {
+
+        statusBar()->showMessage(
+            "Backup completed successfully."
+            );
+
+        QMessageBox::information(
+            this,
+            tr("Backup Complete"),
+            tr(
+                "Backup completed successfully.\n\n"
+                "Files copied: %1\n"
+                "Files skipped: %2\n\n"
+                "Backup location:\n%3"
+                )
+                .arg(result.copiedFiles)
+                .arg(result.skippedFiles)
+                .arg(result.backupPath)
+            );
+
+        return;
+    }
+
+    statusBar()->showMessage(
+        "Backup completed with errors."
+        );
+
+    QString details;
+
+    if (!result.errors.isEmpty()) {
+        details =
+            "\n\nErrors:\n"
+            + result.errors.join("\n");
+    }
+
+    QMessageBox::warning(
         this,
-        tr("Configuration Ready"),
+        tr("Backup Completed With Errors"),
         tr(
-            "The source and destination folders are valid.\n\n"
-            "The backup engine will be connected in the next stage."
+            "Some files could not be backed up.\n\n"
+            "Copied: %1\n"
+            "Failed: %2\n"
+            "Skipped: %3"
             )
+                .arg(result.copiedFiles)
+                .arg(result.failedFiles)
+                .arg(result.skippedFiles)
+            + details
         );
 }

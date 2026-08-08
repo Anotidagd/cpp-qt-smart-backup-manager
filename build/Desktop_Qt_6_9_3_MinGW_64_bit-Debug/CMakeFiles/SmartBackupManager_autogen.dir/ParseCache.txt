@@ -379,3 +379,5 @@ C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBacku
 C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/main.cpp
 C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/mainwindow.cpp
  uic:ui_mainwindow.h
+C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/core/backup/BackupService.h
+C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/core/backup/BackupService.cpp

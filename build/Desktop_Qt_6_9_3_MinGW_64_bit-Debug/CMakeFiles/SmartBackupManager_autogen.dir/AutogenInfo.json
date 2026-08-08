@@ -348,6 +348,12 @@
 	"HEADERS" : 
 	[
 		[
+			"C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/core/backup/BackupService.h",
+			"MU",
+			"5YGAMZRTBU/moc_BackupService.cpp",
+			null
+		],
+		[
 			"C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/mainwindow.h",
 			"MU",
 			"EWIEGA46WW/moc_mainwindow.cpp",
@@ -424,6 +430,11 @@
 	"SETTINGS_FILE" : "C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/build/Desktop_Qt_6_9_3_MinGW_64_bit-Debug/CMakeFiles/SmartBackupManager_autogen.dir/AutogenUsed.txt",
 	"SOURCES" : 
 	[
+		[
+			"C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/core/backup/BackupService.cpp",
+			"MU",
+			null
+		],
 		[
 			"C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/main.cpp",
 			"MU",
