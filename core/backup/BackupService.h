@@ -3,6 +3,9 @@
 
 #include <QString>
 #include <QStringList>
+#include <QMetaType>
+
+#include <functional>
 
 struct BackupResult
 {
@@ -21,14 +24,24 @@ struct BackupResult
     QStringList errors;
 };
 
+Q_DECLARE_METATYPE(BackupResult)
+
 class BackupService
 {
 public:
+    using ProgressCallback =
+        std::function<void(
+            int processedFiles,
+            int totalFiles,
+            const QString &currentFile
+            )>;
+
     BackupService() = default;
 
     BackupResult createBackup(
         const QString &sourcePath,
-        const QString &destinationPath
+        const QString &destinationPath,
+        const ProgressCallback &progressCallback = {}
         );
 
 private:
@@ -37,6 +50,10 @@ private:
         const QString &destinationFile,
         QString &errorMessage
         );
+
+    int countFiles(
+        const QString &sourcePath
+        ) const;
 };
 
 #endif // BACKUPSERVICE_H

@@ -17,6 +17,7 @@
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QProgressBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QWidget>
@@ -38,6 +39,8 @@ public:
     QLineEdit *destinationPathEdit;
     QPushButton *browseDestinationButton;
     QPushButton *startBackupButton;
+    QLabel *progressLabel;
+    QProgressBar *backupProgressBar;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -98,6 +101,14 @@ public:
 
         gridLayout->addWidget(startBackupButton, 4, 1, 1, 1);
 
+        progressLabel = new QLabel(centralwidget);
+        progressLabel->setObjectName("progressLabel");
+        progressLabel->setGeometry(QRect(90, 330, 37, 12));
+        backupProgressBar = new QProgressBar(centralwidget);
+        backupProgressBar->setObjectName("backupProgressBar");
+        backupProgressBar->setGeometry(QRect(90, 350, 521, 23));
+        backupProgressBar->setMaximum(0);
+        backupProgressBar->setValue(0);
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
@@ -125,6 +136,7 @@ public:
         destinationPathEdit->setPlaceholderText(QCoreApplication::translate("MainWindow", "select where backups should be stored", nullptr));
         browseDestinationButton->setText(QCoreApplication::translate("MainWindow", "Browse", nullptr));
         startBackupButton->setText(QCoreApplication::translate("MainWindow", "Start Backup", nullptr));
+        progressLabel->setText(QCoreApplication::translate("MainWindow", "Ready", nullptr));
     } // retranslateUi
 
 };

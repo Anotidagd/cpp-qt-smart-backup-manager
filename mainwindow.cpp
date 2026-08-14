@@ -1,12 +1,16 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include "core/backup/BackupService.h"
+#include "core/backup/BackupWorker.h"
+
 #include <QDir>
 #include <QFileDialog>
 #include <QFileInfo>
+#include <QLineEdit>
 #include <QMessageBox>
 #include <QPushButton>
-#include "core/backup/BackupService.h"
+#include <QThread>
 
 namespace
 {
@@ -23,10 +27,15 @@ QString normalizePath(const QString &path)
         return {};
     }
 
-    return QDir::cleanPath(QDir(path).absolutePath());
+    return QDir::cleanPath(
+        QDir(path).absolutePath()
+        );
 }
 
-bool pathsAreEqual(const QString &firstPath, const QString &secondPath)
+bool pathsAreEqual(
+    const QString &firstPath,
+    const QString &secondPath
+    )
 {
     return normalizePath(firstPath).compare(
                normalizePath(secondPath),
@@ -34,26 +43,41 @@ bool pathsAreEqual(const QString &firstPath, const QString &secondPath)
                ) == 0;
 }
 
-bool isSameOrChildDirectory(const QString &childPath,
-                            const QString &parentPath)
+bool isSameOrChildDirectory(
+    const QString &childPath,
+    const QString &parentPath
+    )
 {
-    const QString child = normalizePath(childPath);
-    QString parent = normalizePath(parentPath);
+    const QString child =
+        normalizePath(childPath);
 
-    if (child.isEmpty() || parent.isEmpty()) {
+    QString parent =
+        normalizePath(parentPath);
+
+    if (child.isEmpty() ||
+        parent.isEmpty()) {
+
         return false;
     }
 
-    if (child.compare(parent, pathCaseSensitivity) == 0) {
+    if (child.compare(
+            parent,
+            pathCaseSensitivity
+            ) == 0) {
+
         return true;
     }
 
     parent += QDir::separator();
 
-    return child.startsWith(parent, pathCaseSensitivity);
+    return child.startsWith(
+        parent,
+        pathCaseSensitivity
+        );
 }
 
 } // namespace
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
@@ -61,42 +85,70 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    // Required because BackupResult travels
+    // between worker and GUI threads.
+    qRegisterMetaType<BackupResult>(
+        "BackupResult"
+        );
+
     ui->sourcePathEdit->setReadOnly(true);
     ui->destinationPathEdit->setReadOnly(true);
+
     ui->startBackupButton->setEnabled(false);
 
-    connect(ui->browseSourceButton,
-            &QPushButton::clicked,
-            this,
-            &MainWindow::selectSourceFolder);
+    ui->backupProgressBar->setRange(0, 100);
+    ui->backupProgressBar->setValue(0);
 
-    connect(ui->browseDestinationButton,
-            &QPushButton::clicked,
-            this,
-            &MainWindow::selectDestinationFolder);
+    ui->progressLabel->setText(
+        "Ready"
+        );
 
-    connect(ui->sourcePathEdit,
-            &QLineEdit::textChanged,
-            this,
-            &MainWindow::updateStartButtonState);
+    connect(
+        ui->browseSourceButton,
+        &QPushButton::clicked,
+        this,
+        &MainWindow::selectSourceFolder
+        );
 
-    connect(ui->destinationPathEdit,
-            &QLineEdit::textChanged,
-            this,
-            &MainWindow::updateStartButtonState);
+    connect(
+        ui->browseDestinationButton,
+        &QPushButton::clicked,
+        this,
+        &MainWindow::selectDestinationFolder
+        );
 
-    connect(ui->startBackupButton,
-            &QPushButton::clicked,
-            this,
-            &MainWindow::handleStartBackup);
+    connect(
+        ui->sourcePathEdit,
+        &QLineEdit::textChanged,
+        this,
+        &MainWindow::updateStartButtonState
+        );
 
-    statusBar()->showMessage("Select a source folder and backup destination.");
+    connect(
+        ui->destinationPathEdit,
+        &QLineEdit::textChanged,
+        this,
+        &MainWindow::updateStartButtonState
+        );
+
+    connect(
+        ui->startBackupButton,
+        &QPushButton::clicked,
+        this,
+        &MainWindow::handleStartBackup
+        );
+
+    statusBar()->showMessage(
+        "Select a source folder and backup destination."
+        );
 }
+
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
+
 
 void MainWindow::selectSourceFolder()
 {
@@ -118,12 +170,16 @@ void MainWindow::selectSourceFolder()
         return;
     }
 
-    ui->sourcePathEdit->setText(normalizePath(selectedDirectory));
+    ui->sourcePathEdit->setText(
+        normalizePath(selectedDirectory)
+        );
 }
+
 
 void MainWindow::selectDestinationFolder()
 {
-    QString initialDirectory = ui->destinationPathEdit->text();
+    QString initialDirectory =
+        ui->destinationPathEdit->text();
 
     if (initialDirectory.isEmpty()) {
         initialDirectory = QDir::homePath();
@@ -147,77 +203,134 @@ void MainWindow::selectDestinationFolder()
         );
 }
 
+
 void MainWindow::updateStartButtonState()
 {
     QString errorMessage;
-    const bool pathsAreValid = validatePaths(&errorMessage);
 
-    ui->startBackupButton->setEnabled(pathsAreValid);
+    const bool pathsAreValid =
+        validatePaths(&errorMessage);
+
+    // Important:
+    // Never enable Start while backup is running.
+    ui->startBackupButton->setEnabled(
+        pathsAreValid &&
+        !m_backupRunning
+        );
 
     if (pathsAreValid) {
+
+        if (!m_backupRunning) {
+            statusBar()->showMessage(
+                "Backup configuration is valid."
+                );
+        }
+
+    } else if (
+        !ui->sourcePathEdit->text().isEmpty() &&
+        !ui->destinationPathEdit->text().isEmpty()
+        ) {
+
         statusBar()->showMessage(
-            "Backup configuration is valid."
+            errorMessage
             );
-    } else if (!ui->sourcePathEdit->text().isEmpty() &&
-               !ui->destinationPathEdit->text().isEmpty()) {
-        statusBar()->showMessage(errorMessage);
+
     } else {
+
         statusBar()->showMessage(
             "Select a source folder and backup destination."
             );
     }
 }
 
-bool MainWindow::validatePaths(QString *errorMessage) const
+
+bool MainWindow::validatePaths(
+    QString *errorMessage
+    ) const
 {
     const QString sourcePath =
-        normalizePath(ui->sourcePathEdit->text());
+        normalizePath(
+            ui->sourcePathEdit->text()
+            );
 
     const QString destinationPath =
-        normalizePath(ui->destinationPathEdit->text());
+        normalizePath(
+            ui->destinationPathEdit->text()
+            );
 
-    auto setError = [errorMessage](const QString &message) {
+    auto setError =
+        [errorMessage](
+            const QString &message
+            )
+    {
         if (errorMessage != nullptr) {
             *errorMessage = message;
         }
     };
 
     if (sourcePath.isEmpty()) {
-        setError("Please select a source folder.");
+
+        setError(
+            "Please select a source folder."
+            );
+
         return false;
     }
 
     if (destinationPath.isEmpty()) {
-        setError("Please select a backup destination.");
+
+        setError(
+            "Please select a backup destination."
+            );
+
         return false;
     }
 
     if (!QFileInfo(sourcePath).isDir()) {
-        setError("The selected source folder does not exist.");
+
+        setError(
+            "The selected source folder does not exist."
+            );
+
         return false;
     }
 
     if (!QFileInfo(destinationPath).isDir()) {
-        setError("The backup destination does not exist.");
+
+        setError(
+            "The backup destination does not exist."
+            );
+
         return false;
     }
 
-    if (pathsAreEqual(sourcePath, destinationPath)) {
+    if (pathsAreEqual(
+            sourcePath,
+            destinationPath
+            )) {
+
         setError(
             "The source and destination cannot be the same folder."
             );
+
         return false;
     }
 
-    if (isSameOrChildDirectory(destinationPath, sourcePath)) {
+    if (isSameOrChildDirectory(
+            destinationPath,
+            sourcePath
+            )) {
+
         setError(
             "The backup destination cannot be inside the source folder."
             );
+
         return false;
     }
 
     return true;
 }
+
 
 void MainWindow::handleStartBackup()
 {
@@ -234,29 +347,210 @@ void MainWindow::handleStartBackup()
         return;
     }
 
+    // Prevent double-starting.
+    if (m_backupRunning) {
+        return;
+    }
+
     const QString sourcePath =
         ui->sourcePathEdit->text();
 
     const QString destinationPath =
         ui->destinationPathEdit->text();
 
+    m_backupRunning = true;
+
+    // Lock configuration controls.
     ui->startBackupButton->setEnabled(false);
 
-    statusBar()->showMessage(
-        "Backup in progress..."
+    ui->browseSourceButton->setEnabled(false);
+
+    ui->browseDestinationButton->setEnabled(false);
+
+    // Indeterminate progress while source
+    // is initially being scanned.
+    ui->backupProgressBar->setRange(
+        0,
+        0
         );
 
-    BackupService backupService;
+    ui->progressLabel->setText(
+        "Scanning source files..."
+        );
 
-    const BackupResult result =
-        backupService.createBackup(
+    statusBar()->showMessage(
+        "Preparing backup..."
+        );
+
+    // Create thread.
+    m_backupThread =
+        new QThread(this);
+
+    // Create worker.
+    m_backupWorker =
+        new BackupWorker(
             sourcePath,
             destinationPath
             );
 
-    ui->startBackupButton->setEnabled(true);
+    // Worker now belongs to background thread.
+    m_backupWorker->moveToThread(
+        m_backupThread
+        );
+
+    // When thread starts,
+    // begin the backup.
+    connect(
+        m_backupThread,
+        &QThread::started,
+        m_backupWorker,
+        &BackupWorker::process
+        );
+
+    // Worker reports progress to GUI.
+    connect(
+        m_backupWorker,
+        &BackupWorker::progressChanged,
+        this,
+        &MainWindow::handleBackupProgress
+        );
+
+    // Worker reports final result.
+    connect(
+        m_backupWorker,
+        &BackupWorker::finished,
+        this,
+        &MainWindow::handleBackupFinished
+        );
+
+    // Stop thread when backup ends.
+    connect(
+        m_backupWorker,
+        &BackupWorker::finished,
+        m_backupThread,
+        &QThread::quit
+        );
+
+    // Clean worker.
+    connect(
+        m_backupWorker,
+        &BackupWorker::finished,
+        m_backupWorker,
+        &QObject::deleteLater
+        );
+
+    // Clean thread.
+    connect(
+        m_backupThread,
+        &QThread::finished,
+        m_backupThread,
+        &QObject::deleteLater
+        );
+
+    // Reset our pointers after thread stops.
+    connect(
+        m_backupThread,
+        &QThread::finished,
+        this,
+        [this]()
+        {
+            m_backupThread = nullptr;
+            m_backupWorker = nullptr;
+        }
+        );
+
+    // Start background thread.
+    m_backupThread->start();
+}
+
+
+void MainWindow::handleBackupProgress(
+    int processedFiles,
+    int totalFiles,
+    const QString &currentFile
+    )
+{
+    if (totalFiles <= 0) {
+
+        ui->backupProgressBar->setRange(
+            0,
+            0
+            );
+
+        ui->progressLabel->setText(
+            "Preparing backup..."
+            );
+
+        return;
+    }
+
+    // Switch from indeterminate
+    // to actual progress.
+    ui->backupProgressBar->setRange(
+        0,
+        totalFiles
+        );
+
+    ui->backupProgressBar->setValue(
+        processedFiles
+        );
+
+    if (currentFile.isEmpty()) {
+
+        ui->progressLabel->setText(
+            QString("%1 / %2 files")
+                .arg(processedFiles)
+                .arg(totalFiles)
+            );
+
+        return;
+    }
+
+    ui->progressLabel->setText(
+        QString(
+            "%1 / %2 files — %3"
+            )
+            .arg(processedFiles)
+            .arg(totalFiles)
+            .arg(currentFile)
+        );
+
+    statusBar()->showMessage(
+        QString(
+            "Backing up %1"
+            )
+            .arg(currentFile)
+        );
+}
+
+
+void MainWindow::handleBackupFinished(
+    const BackupResult &result
+    )
+{
+    m_backupRunning = false;
+
+    // Unlock controls.
+    ui->browseSourceButton->setEnabled(true);
+
+    ui->browseDestinationButton->setEnabled(true);
+
+    // Start button gets enabled only
+    // if paths remain valid.
+    updateStartButtonState();
+
+    if (ui->backupProgressBar->maximum() > 0) {
+
+        ui->backupProgressBar->setValue(
+            ui->backupProgressBar->maximum()
+            );
+    }
 
     if (result.success) {
+
+        ui->progressLabel->setText(
+            "Backup completed successfully."
+            );
 
         statusBar()->showMessage(
             "Backup completed successfully."
@@ -281,6 +575,10 @@ void MainWindow::handleStartBackup()
         return;
     }
 
+    ui->progressLabel->setText(
+        "Backup completed with errors."
+        );
+
     statusBar()->showMessage(
         "Backup completed with errors."
         );
@@ -288,6 +586,7 @@ void MainWindow::handleStartBackup()
     QString details;
 
     if (!result.errors.isEmpty()) {
+
         details =
             "\n\nErrors:\n"
             + result.errors.join("\n");

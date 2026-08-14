@@ -1,5 +1,8 @@
 SmartBackupManager_autogen/timestamp: \
+	C:/Qt/6.9.3/mingw_64/include/QtCore/QMetaType \
+	C:/Qt/6.9.3/mingw_64/include/QtCore/QObject \
 	C:/Qt/6.9.3/mingw_64/include/QtCore/QString \
+	C:/Qt/6.9.3/mingw_64/include/QtCore/QStringList \
 	C:/Qt/6.9.3/mingw_64/include/QtCore/q17memory.h \
 	C:/Qt/6.9.3/mingw_64/include/QtCore/q20functional.h \
 	C:/Qt/6.9.3/mingw_64/include/QtCore/q20iterator.h \
@@ -586,6 +589,8 @@ SmartBackupManager_autogen/timestamp: \
 	C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/build/Desktop_Qt_6_9_3_MinGW_64_bit-Debug/SmartBackupManager_autogen/moc_predefs.h \
 	C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/core/backup/BackupService.cpp \
 	C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/core/backup/BackupService.h \
+	C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/core/backup/BackupWorker.cpp \
+	C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/core/backup/BackupWorker.h \
 	C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/core/hashing/HashService.cpp \
 	C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/core/hashing/HashService.h \
 	C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/main.cpp \

@@ -16,6 +16,7 @@ qt_add_executable(SmartBackupManager
     core/backup/BackupService.cpp
     core/hashing/HashService.h
     core/hashing/HashService.cpp
+    core/backup/BackupWorker.h core/backup/BackupWorker.cpp
 
 
 )

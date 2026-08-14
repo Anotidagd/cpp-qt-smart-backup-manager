@@ -9,7 +9,8 @@
 
 BackupResult BackupService::createBackup(
     const QString &sourcePath,
-    const QString &destinationPath
+    const QString &destinationPath,
+    const ProgressCallback &progressCallback
     )
 {
     BackupResult result;
@@ -68,6 +69,20 @@ BackupResult BackupService::createBackup(
             QDir::System,
         QDirIterator::Subdirectories
         );
+
+    const int totalFiles =
+        countFiles(sourcePath);
+
+    int processedFiles = 0;
+
+    if (progressCallback) {
+
+        progressCallback(
+            0,
+            totalFiles,
+            QString()
+            );
+    }
 
     while (iterator.hasNext()) {
 
@@ -216,4 +231,39 @@ bool BackupService::copyFile(
     }
 
     return true;
+}
+
+int BackupService::countFiles(
+    const QString &sourcePath
+    ) const
+{
+    int totalFiles = 0;
+
+    QDirIterator iterator(
+        sourcePath,
+        QDir::Files |
+            QDir::Dirs |
+            QDir::NoDotAndDotDot |
+            QDir::Hidden |
+            QDir::System,
+        QDirIterator::Subdirectories
+        );
+
+
+
+    while (iterator.hasNext()) {
+
+        iterator.next();
+
+        const QFileInfo fileInfo =
+            iterator.fileInfo();
+
+        if (fileInfo.isFile() ||
+            fileInfo.isSymLink()) {
+
+            totalFiles++;
+        }
+    }
+
+    return totalFiles;
 }
