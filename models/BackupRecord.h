@@ -6,6 +6,7 @@
 
 struct BackupRecord
 {
+    int id = 0;
     QString sourcePath;
     QString destinationPath;
     QString backupPath;

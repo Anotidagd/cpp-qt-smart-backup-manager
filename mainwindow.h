@@ -40,6 +40,7 @@ private slots:
     void handleBackupFinished(
         const BackupResult &result
         );
+    void refreshBackupHistory();
 
 private:
     bool validatePaths(

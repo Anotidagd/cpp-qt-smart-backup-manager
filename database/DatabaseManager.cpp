@@ -264,3 +264,117 @@ QString DatabaseManager::databasePath() const
 {
     return m_databasePath;
 }
+QList<BackupRecord> DatabaseManager::getBackupHistory(
+    QString *errorMessage
+    )
+{
+    QList<BackupRecord> records;
+
+    if (!m_database.isOpen()) {
+
+        if (errorMessage != nullptr) {
+            *errorMessage =
+                "The backup history database is not open.";
+        }
+
+        return records;
+    }
+
+    QSqlQuery query(m_database);
+
+    const QString sql =
+        R"(
+            SELECT
+                id,
+                source_path,
+                destination_path,
+                backup_path,
+                status,
+
+                copied_files,
+                verified_files,
+                failed_files,
+                integrity_failures,
+                skipped_files,
+
+                started_at,
+                completed_at,
+                duration_ms
+
+            FROM backup_history
+
+            ORDER BY id DESC
+        )";
+
+    if (!query.exec(sql)) {
+
+        if (errorMessage != nullptr) {
+
+            *errorMessage =
+                "Could not load backup history: "
+                + query.lastError().text();
+        }
+
+        return records;
+    }
+
+    while (query.next()) {
+
+        BackupRecord record;
+
+        record.id =
+            query.value("id").toInt();
+
+        record.sourcePath =
+            query.value("source_path").toString();
+
+        record.destinationPath =
+            query.value("destination_path").toString();
+
+        record.backupPath =
+            query.value("backup_path").toString();
+
+        record.status =
+            query.value("status").toString();
+
+        record.copiedFiles =
+            query.value("copied_files").toInt();
+
+        record.verifiedFiles =
+            query.value("verified_files").toInt();
+
+        record.failedFiles =
+            query.value("failed_files").toInt();
+
+        record.integrityFailures =
+            query.value(
+                     "integrity_failures"
+                     ).toInt();
+
+        record.skippedFiles =
+            query.value("skipped_files").toInt();
+
+        record.startedAt =
+            QDateTime::fromString(
+                query.value(
+                         "started_at"
+                         ).toString(),
+                Qt::ISODateWithMs
+                );
+
+        record.completedAt =
+            QDateTime::fromString(
+                query.value(
+                         "completed_at"
+                         ).toString(),
+                Qt::ISODateWithMs
+                );
+
+        record.durationMs =
+            query.value("duration_ms").toLongLong();
+
+        records.append(record);
+    }
+
+    return records;
+}

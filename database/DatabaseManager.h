@@ -5,6 +5,7 @@
 
 #include <QSqlDatabase>
 #include <QString>
+#include <QList>
 
 class DatabaseManager
 {
@@ -21,6 +22,9 @@ public:
         );
 
     QString databasePath() const;
+    QList<BackupRecord> getBackupHistory(
+        QString *errorMessage = nullptr
+        );
 
 private:
     bool createTables(

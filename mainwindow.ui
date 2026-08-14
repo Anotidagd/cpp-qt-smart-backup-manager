@@ -122,8 +122,8 @@
    <widget class="QLabel" name="progressLabel">
     <property name="geometry">
      <rect>
-      <x>90</x>
-      <y>330</y>
+      <x>80</x>
+      <y>310</y>
       <width>37</width>
       <height>12</height>
      </rect>
@@ -135,9 +135,9 @@
    <widget class="QProgressBar" name="backupProgressBar">
     <property name="geometry">
      <rect>
-      <x>90</x>
-      <y>350</y>
-      <width>521</width>
+      <x>80</x>
+      <y>330</y>
+      <width>561</width>
       <height>23</height>
      </rect>
     </property>
@@ -147,6 +147,86 @@
     <property name="value">
      <number>0</number>
     </property>
+   </widget>
+   <widget class="QGroupBox" name="backupHistoryGroup">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>350</y>
+      <width>641</width>
+      <height>201</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Backup History</string>
+    </property>
+    <widget class="QPushButton" name="refreshHistoryButton">
+     <property name="geometry">
+      <rect>
+       <x>520</x>
+       <y>27</y>
+       <width>91</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Refresh History</string>
+     </property>
+    </widget>
+    <widget class="QTableWidget" name="historyTable">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>601</width>
+       <height>131</height>
+      </rect>
+     </property>
+     <property name="columnCount">
+      <number>9</number>
+     </property>
+     <column>
+      <property name="text">
+       <string>Date</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Status</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Source</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Destination</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Copied</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Verified</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Failed</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Duration</string>
+      </property>
+     </column>
+     <column/>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

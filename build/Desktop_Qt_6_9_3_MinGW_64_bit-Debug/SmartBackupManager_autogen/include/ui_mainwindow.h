@@ -13,6 +13,7 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
+#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
@@ -20,6 +21,7 @@
 #include <QtWidgets/QProgressBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
+#include <QtWidgets/QTableWidget>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -41,6 +43,9 @@ public:
     QPushButton *startBackupButton;
     QLabel *progressLabel;
     QProgressBar *backupProgressBar;
+    QGroupBox *backupHistoryGroup;
+    QPushButton *refreshHistoryButton;
+    QTableWidget *historyTable;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -103,12 +108,40 @@ public:
 
         progressLabel = new QLabel(centralwidget);
         progressLabel->setObjectName("progressLabel");
-        progressLabel->setGeometry(QRect(90, 330, 37, 12));
+        progressLabel->setGeometry(QRect(80, 310, 37, 12));
         backupProgressBar = new QProgressBar(centralwidget);
         backupProgressBar->setObjectName("backupProgressBar");
-        backupProgressBar->setGeometry(QRect(90, 350, 521, 23));
+        backupProgressBar->setGeometry(QRect(80, 330, 561, 23));
         backupProgressBar->setMaximum(0);
         backupProgressBar->setValue(0);
+        backupHistoryGroup = new QGroupBox(centralwidget);
+        backupHistoryGroup->setObjectName("backupHistoryGroup");
+        backupHistoryGroup->setGeometry(QRect(80, 350, 641, 201));
+        refreshHistoryButton = new QPushButton(backupHistoryGroup);
+        refreshHistoryButton->setObjectName("refreshHistoryButton");
+        refreshHistoryButton->setGeometry(QRect(520, 27, 91, 21));
+        historyTable = new QTableWidget(backupHistoryGroup);
+        if (historyTable->columnCount() < 9)
+            historyTable->setColumnCount(9);
+        QTableWidgetItem *__qtablewidgetitem = new QTableWidgetItem();
+        historyTable->setHorizontalHeaderItem(0, __qtablewidgetitem);
+        QTableWidgetItem *__qtablewidgetitem1 = new QTableWidgetItem();
+        historyTable->setHorizontalHeaderItem(1, __qtablewidgetitem1);
+        QTableWidgetItem *__qtablewidgetitem2 = new QTableWidgetItem();
+        historyTable->setHorizontalHeaderItem(2, __qtablewidgetitem2);
+        QTableWidgetItem *__qtablewidgetitem3 = new QTableWidgetItem();
+        historyTable->setHorizontalHeaderItem(3, __qtablewidgetitem3);
+        QTableWidgetItem *__qtablewidgetitem4 = new QTableWidgetItem();
+        historyTable->setHorizontalHeaderItem(4, __qtablewidgetitem4);
+        QTableWidgetItem *__qtablewidgetitem5 = new QTableWidgetItem();
+        historyTable->setHorizontalHeaderItem(5, __qtablewidgetitem5);
+        QTableWidgetItem *__qtablewidgetitem6 = new QTableWidgetItem();
+        historyTable->setHorizontalHeaderItem(6, __qtablewidgetitem6);
+        QTableWidgetItem *__qtablewidgetitem7 = new QTableWidgetItem();
+        historyTable->setHorizontalHeaderItem(7, __qtablewidgetitem7);
+        historyTable->setObjectName("historyTable");
+        historyTable->setGeometry(QRect(10, 50, 601, 131));
+        historyTable->setColumnCount(9);
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
@@ -137,6 +170,24 @@ public:
         browseDestinationButton->setText(QCoreApplication::translate("MainWindow", "Browse", nullptr));
         startBackupButton->setText(QCoreApplication::translate("MainWindow", "Start Backup", nullptr));
         progressLabel->setText(QCoreApplication::translate("MainWindow", "Ready", nullptr));
+        backupHistoryGroup->setTitle(QCoreApplication::translate("MainWindow", "Backup History", nullptr));
+        refreshHistoryButton->setText(QCoreApplication::translate("MainWindow", "Refresh History", nullptr));
+        QTableWidgetItem *___qtablewidgetitem = historyTable->horizontalHeaderItem(0);
+        ___qtablewidgetitem->setText(QCoreApplication::translate("MainWindow", "Date", nullptr));
+        QTableWidgetItem *___qtablewidgetitem1 = historyTable->horizontalHeaderItem(1);
+        ___qtablewidgetitem1->setText(QCoreApplication::translate("MainWindow", "Status", nullptr));
+        QTableWidgetItem *___qtablewidgetitem2 = historyTable->horizontalHeaderItem(2);
+        ___qtablewidgetitem2->setText(QCoreApplication::translate("MainWindow", "Source", nullptr));
+        QTableWidgetItem *___qtablewidgetitem3 = historyTable->horizontalHeaderItem(3);
+        ___qtablewidgetitem3->setText(QCoreApplication::translate("MainWindow", "Destination", nullptr));
+        QTableWidgetItem *___qtablewidgetitem4 = historyTable->horizontalHeaderItem(4);
+        ___qtablewidgetitem4->setText(QCoreApplication::translate("MainWindow", "Copied", nullptr));
+        QTableWidgetItem *___qtablewidgetitem5 = historyTable->horizontalHeaderItem(5);
+        ___qtablewidgetitem5->setText(QCoreApplication::translate("MainWindow", "Verified", nullptr));
+        QTableWidgetItem *___qtablewidgetitem6 = historyTable->horizontalHeaderItem(6);
+        ___qtablewidgetitem6->setText(QCoreApplication::translate("MainWindow", "Failed", nullptr));
+        QTableWidgetItem *___qtablewidgetitem7 = historyTable->horizontalHeaderItem(7);
+        ___qtablewidgetitem7->setText(QCoreApplication::translate("MainWindow", "Duration", nullptr));
     } // retranslateUi
 
 };

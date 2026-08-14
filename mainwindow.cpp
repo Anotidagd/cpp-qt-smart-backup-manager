@@ -12,6 +12,9 @@
 #include <QPushButton>
 #include <QThread>
 #include <QDebug>
+#include <QHeaderView>
+#include <QTableWidget>
+#include <QTableWidgetItem>
 
 namespace
 {
@@ -101,6 +104,67 @@ MainWindow::MainWindow(QWidget *parent)
         qWarning()
             << databaseError;
     }
+    ////////////////////////
+    ui->historyTable->setColumnCount(8);
+
+    ui->historyTable->setHorizontalHeaderLabels(
+        {
+            "Date",
+            "Status",
+            "Source",
+            "Destination",
+            "Copied",
+            "Verified",
+            "Failed",
+            "Duration"
+        }
+        );
+
+    ui->historyTable->setEditTriggers(
+        QAbstractItemView::NoEditTriggers
+        );
+
+    ui->historyTable->setSelectionBehavior(
+        QAbstractItemView::SelectRows
+        );
+
+    ui->historyTable->setSelectionMode(
+        QAbstractItemView::SingleSelection
+        );
+
+    ui->historyTable->setAlternatingRowColors(
+        true
+        );
+
+    ui->historyTable->verticalHeader()->setVisible(
+        false
+        );
+
+    QHeaderView *header =
+        ui->historyTable->horizontalHeader();
+
+    header->setSectionResizeMode(
+        QHeaderView::ResizeToContents
+        );
+
+    header->setSectionResizeMode(
+        2,
+        QHeaderView::Stretch
+        );
+
+    header->setSectionResizeMode(
+        3,
+        QHeaderView::Stretch
+        );
+
+    connect(
+        ui->refreshHistoryButton,
+        &QPushButton::clicked,
+        this,
+        &MainWindow::refreshBackupHistory
+        );
+    //////////////////////
+
 
     // Required because BackupResult travels
     // between worker and GUI threads.
@@ -691,4 +755,197 @@ void MainWindow::handleBackupFinished(
     qDebug()
         << "Database:"
         << m_databaseManager.databasePath();
+    if (m_databaseAvailable) {
+        refreshBackupHistory();
+    }
+}
+void MainWindow::refreshBackupHistory()
+{
+    if (!m_databaseAvailable) {
+
+        statusBar()->showMessage(
+            "Backup history database is unavailable."
+            );
+
+        return;
+    }
+
+    QString errorMessage;
+
+    const QList<BackupRecord> records =
+        m_databaseManager.getBackupHistory(
+            &errorMessage
+            );
+
+    if (!errorMessage.isEmpty()) {
+
+        statusBar()->showMessage(
+            "Unable to load backup history."
+            );
+
+        qWarning()
+            << errorMessage;
+
+        return;
+    }
+
+    ui->historyTable->setRowCount(0);
+
+    for (const BackupRecord &record : records) {
+
+        const int row =
+            ui->historyTable->rowCount();
+
+        ui->historyTable->insertRow(row);
+
+        // Convert stored UTC timestamp
+        // back to local time for the user.
+        const QString dateText =
+            record.startedAt
+                .toLocalTime()
+                .toString(
+                    "dd MMM yyyy HH:mm:ss"
+                    );
+
+        QString durationText;
+
+        if (record.durationMs < 1000) {
+
+            durationText =
+                QString("%1 ms")
+                    .arg(record.durationMs);
+
+        } else {
+
+            const double seconds =
+                record.durationMs / 1000.0;
+
+            durationText =
+                QString("%1 s")
+                    .arg(
+                        seconds,
+                        0,
+                        'f',
+                        2
+                        );
+        }
+
+        auto *dateItem =
+            new QTableWidgetItem(
+                dateText
+                );
+
+        auto *statusItem =
+            new QTableWidgetItem(
+                record.status
+                );
+
+        auto *sourceItem =
+            new QTableWidgetItem(
+                record.sourcePath
+                );
+
+        auto *destinationItem =
+            new QTableWidgetItem(
+                record.destinationPath
+                );
+
+        auto *copiedItem =
+            new QTableWidgetItem(
+                QString::number(
+                    record.copiedFiles
+                    )
+                );
+
+        auto *verifiedItem =
+            new QTableWidgetItem(
+                QString::number(
+                    record.verifiedFiles
+                    )
+                );
+
+        auto *failedItem =
+            new QTableWidgetItem(
+                QString::number(
+                    record.failedFiles +
+                    record.integrityFailures
+                    )
+                );
+
+        auto *durationItem =
+            new QTableWidgetItem(
+                durationText
+                );
+
+        // Useful when paths are truncated.
+        sourceItem->setToolTip(
+            record.sourcePath
+            );
+
+        destinationItem->setToolTip(
+            record.destinationPath
+            );
+
+        // Store actual backup path
+        // inside the row for later use.
+        sourceItem->setData(
+            Qt::UserRole,
+            record.backupPath
+            );
+
+        ui->historyTable->setItem(
+            row,
+            0,
+            dateItem
+            );
+
+        ui->historyTable->setItem(
+            row,
+            1,
+            statusItem
+            );
+
+        ui->historyTable->setItem(
+            row,
+            2,
+            sourceItem
+            );
+
+        ui->historyTable->setItem(
+            row,
+            3,
+            destinationItem
+            );
+
+        ui->historyTable->setItem(
+            row,
+            4,
+            copiedItem
+            );
+
+        ui->historyTable->setItem(
+            row,
+            5,
+            verifiedItem
+            );
+
+        ui->historyTable->setItem(
+            row,
+            6,
+            failedItem
+            );
+
+        ui->historyTable->setItem(
+            row,
+            7,
+            durationItem
+            );
+    }
+
+    statusBar()->showMessage(
+        QString(
+            "%1 backup record(s) loaded."
+            )
+            .arg(records.size())
+        );
 }

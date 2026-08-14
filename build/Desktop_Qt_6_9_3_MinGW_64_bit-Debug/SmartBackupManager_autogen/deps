@@ -1,5 +1,6 @@
 SmartBackupManager_autogen/timestamp: \
 	C:/Qt/6.9.3/mingw_64/include/QtCore/QDateTime \
+	C:/Qt/6.9.3/mingw_64/include/QtCore/QList \
 	C:/Qt/6.9.3/mingw_64/include/QtCore/QMetaType \
 	C:/Qt/6.9.3/mingw_64/include/QtCore/QObject \
 	C:/Qt/6.9.3/mingw_64/include/QtCore/QString \
