@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 3.19)
 project(SmartBackupManager LANGUAGES CXX)
 
-find_package(Qt6 6.5 REQUIRED COMPONENTS Core Widgets)
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Sql)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Sql)
 
 qt_standard_project_setup()
 
@@ -16,7 +17,11 @@ qt_add_executable(SmartBackupManager
     core/backup/BackupService.cpp
     core/hashing/HashService.h
     core/hashing/HashService.cpp
-    core/backup/BackupWorker.h core/backup/BackupWorker.cpp
+    core/backup/BackupWorker.h
+    core/backup/BackupWorker.cpp
+    database/DatabaseManager.cpp
+    database/DatabaseManager.h
+    models/BackupRecord.h
 
 
 )
@@ -25,6 +30,7 @@ target_link_libraries(SmartBackupManager
     PRIVATE
         Qt::Core
         Qt::Widgets
+        Qt::Sql
 )
 
 include(GNUInstallDirs)

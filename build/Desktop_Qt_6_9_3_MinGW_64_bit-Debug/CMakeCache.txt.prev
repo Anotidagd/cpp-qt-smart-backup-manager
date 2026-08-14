@@ -298,6 +298,9 @@ QT_CREATOR_SKIP_PACKAGE_MANAGER_SETUP:BOOL=OFF
 //Qt Creator source groups extensions
 QT_CREATOR_SOURCE_GROUPS:BOOL=ON
 
+//The directory containing a CMake configuration file for QT.
+QT_DIR:PATH=C:/Qt/6.9.3/mingw_64/lib/cmake/Qt6
+
 //No help, variable specified on the command line.
 QT_MAINTENANCE_TOOL:FILEPATH=C:/Qt/MaintenanceTool.exe
 
@@ -325,6 +328,12 @@ Qt6GuiTools_DIR:PATH=C:/Qt/6.9.3/mingw_64/lib/cmake/Qt6GuiTools
 //The directory containing a CMake configuration file for Qt6Gui.
 Qt6Gui_DIR:PATH=C:/Qt/6.9.3/mingw_64/lib/cmake/Qt6Gui
 
+//The directory containing a CMake configuration file for Qt6SqlPrivate.
+Qt6SqlPrivate_DIR:PATH=C:/Qt/6.9.3/mingw_64/lib/cmake/Qt6SqlPrivate
+
+//The directory containing a CMake configuration file for Qt6Sql.
+Qt6Sql_DIR:PATH=C:/Qt/6.9.3/mingw_64/lib/cmake/Qt6Sql
+
 //The directory containing a CMake configuration file for Qt6WidgetsPrivate.
 Qt6WidgetsPrivate_DIR:PATH=C:/Qt/6.9.3/mingw_64/lib/cmake/Qt6WidgetsPrivate
 
@@ -339,6 +348,9 @@ Qt6ZlibPrivate_DIR:PATH=C:/Qt/6.9.3/mingw_64/lib/cmake/Qt6ZlibPrivate
 
 //The directory containing a CMake configuration file for Qt6.
 Qt6_DIR:PATH=C:/Qt/6.9.3/mingw_64/lib/cmake/Qt6
+
+//The directory containing a CMake configuration file for Qt.
+Qt_DIR:PATH=Qt_DIR-NOTFOUND
 
 //Value Computed by CMake
 SmartBackupManager_BINARY_DIR:STATIC=C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/build/Desktop_Qt_6_9_3_MinGW_64_bit-Debug
@@ -539,6 +551,8 @@ CMAKE_STRIP-ADVANCED:INTERNAL=1
 CMAKE_TAPI-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_VERBOSE_MAKEFILE
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
+//Details about finding Threads
+FIND_PACKAGE_MESSAGE_DETAILS_Threads:INTERNAL=[TRUE][v()]
 //Test HAVE_STDATOMIC
 HAVE_STDATOMIC:INTERNAL=1
 //Qt feature: abstractbutton (from target Qt6::Widgets)
@@ -1109,6 +1123,8 @@ QT_FEATURE_splashscreen:INTERNAL=ON
 QT_FEATURE_splitter:INTERNAL=ON
 //Qt feature: sql (from target Qt6::Core)
 QT_FEATURE_sql:INTERNAL=ON
+//Qt feature: sqlmodel (from target Qt6::Sql)
+QT_FEATURE_sqlmodel:INTERNAL=ON
 //Qt feature: sse2 (from target Qt6::Core)
 QT_FEATURE_sse2:INTERNAL=ON
 //Qt feature: sse3 (from target Qt6::Core)

@@ -11,6 +11,7 @@
 #include <QMessageBox>
 #include <QPushButton>
 #include <QThread>
+#include <QDebug>
 
 namespace
 {
@@ -84,6 +85,22 @@ MainWindow::MainWindow(QWidget *parent)
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    QString databaseError;
+
+    m_databaseAvailable =
+        m_databaseManager.initialize(
+            &databaseError
+            );
+
+    if (!m_databaseAvailable) {
+
+        statusBar()->showMessage(
+            "Backup history database unavailable."
+            );
+
+        qWarning()
+            << databaseError;
+    }
 
     // Required because BackupResult travels
     // between worker and GUI threads.
@@ -360,6 +377,9 @@ void MainWindow::handleStartBackup()
 
     m_backupRunning = true;
 
+    m_backupStartedAt =
+        QDateTime::currentDateTimeUtc();
+
     // Lock configuration controls.
     ui->startBackupButton->setEnabled(false);
 
@@ -529,6 +549,64 @@ void MainWindow::handleBackupFinished(
     )
 {
     m_backupRunning = false;
+    const QDateTime completedAt =
+        QDateTime::currentDateTimeUtc();
+
+    if (m_databaseAvailable) {
+
+        BackupRecord record;
+
+        record.sourcePath =
+            ui->sourcePathEdit->text();
+
+        record.destinationPath =
+            ui->destinationPathEdit->text();
+
+        record.backupPath =
+            result.backupPath;
+
+        record.status =
+            result.success
+                ? "success"
+                : "failed";
+
+        record.copiedFiles =
+            result.copiedFiles;
+
+        record.verifiedFiles =
+            result.verifiedFiles;
+
+        record.failedFiles =
+            result.failedFiles;
+
+        record.integrityFailures =
+            result.integrityFailures;
+
+        record.skippedFiles =
+            result.skippedFiles;
+
+        record.startedAt =
+            m_backupStartedAt;
+
+        record.completedAt =
+            completedAt;
+
+        record.durationMs =
+            m_backupStartedAt.msecsTo(
+                completedAt
+                );
+
+        QString databaseError;
+
+        if (!m_databaseManager.insertBackupRecord(
+                record,
+                &databaseError
+                )) {
+
+            qWarning()
+            << databaseError;
+        }
+    }
 
     // Unlock controls.
     ui->browseSourceButton->setEnabled(true);
@@ -610,4 +688,7 @@ void MainWindow::handleBackupFinished(
                 .arg(result.skippedFiles)
             + details
         );
+    qDebug()
+        << "Database:"
+        << m_databaseManager.databasePath();
 }

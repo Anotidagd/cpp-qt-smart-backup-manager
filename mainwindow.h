@@ -5,6 +5,8 @@
 #include <QString>
 
 #include "core/backup/BackupService.h"
+#include "database/DatabaseManager.h"
+#include <QDateTime>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -50,6 +52,14 @@ private:
     BackupWorker *m_backupWorker = nullptr;
 
     bool m_backupRunning = false;
+    DatabaseManager m_databaseManager;
+
+    bool m_databaseAvailable = false;
+
+    QDateTime m_backupStartedAt;
+
+
+
 };
 
 #endif // MAINWINDOW_H

@@ -1,5 +1,6 @@
 C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/build/Desktop_Qt_6_9_3_MinGW_64_bit-Debug/SmartBackupManager_autogen/EWIEGA46WW/moc_mainwindow.cpp: C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/mainwindow.h \
   C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/build/Desktop_Qt_6_9_3_MinGW_64_bit-Debug/SmartBackupManager_autogen/moc_predefs.h \
+  C:/Qt/6.9.3/mingw_64/include/QtCore/QDateTime \
   C:/Qt/6.9.3/mingw_64/include/QtCore/QMetaType \
   C:/Qt/6.9.3/mingw_64/include/QtCore/QString \
   C:/Qt/6.9.3/mingw_64/include/QtCore/QStringList \
@@ -24,6 +25,7 @@ C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBacku
   C:/Qt/6.9.3/mingw_64/include/QtCore/qbytearrayalgorithms.h \
   C:/Qt/6.9.3/mingw_64/include/QtCore/qbytearraylist.h \
   C:/Qt/6.9.3/mingw_64/include/QtCore/qbytearrayview.h \
+  C:/Qt/6.9.3/mingw_64/include/QtCore/qcalendar.h \
   C:/Qt/6.9.3/mingw_64/include/QtCore/qchar.h \
   C:/Qt/6.9.3/mingw_64/include/QtCore/qcompare.h \
   C:/Qt/6.9.3/mingw_64/include/QtCore/qcompare_impl.h \
@@ -37,6 +39,7 @@ C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBacku
   C:/Qt/6.9.3/mingw_64/include/QtCore/qcontiguouscache.h \
   C:/Qt/6.9.3/mingw_64/include/QtCore/qdarwinhelpers.h \
   C:/Qt/6.9.3/mingw_64/include/QtCore/qdatastream.h \
+  C:/Qt/6.9.3/mingw_64/include/QtCore/qdatetime.h \
   C:/Qt/6.9.3/mingw_64/include/QtCore/qdebug.h \
   C:/Qt/6.9.3/mingw_64/include/QtCore/qendian.h \
   C:/Qt/6.9.3/mingw_64/include/QtCore/qexceptionhandling.h \
@@ -56,12 +59,14 @@ C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBacku
   C:/Qt/6.9.3/mingw_64/include/QtCore/qlatin1stringview.h \
   C:/Qt/6.9.3/mingw_64/include/QtCore/qline.h \
   C:/Qt/6.9.3/mingw_64/include/QtCore/qlist.h \
+  C:/Qt/6.9.3/mingw_64/include/QtCore/qlocale.h \
   C:/Qt/6.9.3/mingw_64/include/QtCore/qlogging.h \
   C:/Qt/6.9.3/mingw_64/include/QtCore/qmalloc.h \
   C:/Qt/6.9.3/mingw_64/include/QtCore/qmap.h \
   C:/Qt/6.9.3/mingw_64/include/QtCore/qmargins.h \
   C:/Qt/6.9.3/mingw_64/include/QtCore/qmath.h \
   C:/Qt/6.9.3/mingw_64/include/QtCore/qmetacontainer.h \
+  C:/Qt/6.9.3/mingw_64/include/QtCore/qmetaobject.h \
   C:/Qt/6.9.3/mingw_64/include/QtCore/qmetatype.h \
   C:/Qt/6.9.3/mingw_64/include/QtCore/qminmax.h \
   C:/Qt/6.9.3/mingw_64/include/QtCore/qnamespace.h \
@@ -154,6 +159,11 @@ C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBacku
   C:/Qt/6.9.3/mingw_64/include/QtGui/qtransform.h \
   C:/Qt/6.9.3/mingw_64/include/QtGui/qwindowdefs.h \
   C:/Qt/6.9.3/mingw_64/include/QtGui/qwindowdefs_win.h \
+  C:/Qt/6.9.3/mingw_64/include/QtSql/QSqlDatabase \
+  C:/Qt/6.9.3/mingw_64/include/QtSql/qsqldatabase.h \
+  C:/Qt/6.9.3/mingw_64/include/QtSql/qtsql-config.h \
+  C:/Qt/6.9.3/mingw_64/include/QtSql/qtsqlexports.h \
+  C:/Qt/6.9.3/mingw_64/include/QtSql/qtsqlglobal.h \
   C:/Qt/6.9.3/mingw_64/include/QtWidgets/QMainWindow \
   C:/Qt/6.9.3/mingw_64/include/QtWidgets/qmainwindow.h \
   C:/Qt/6.9.3/mingw_64/include/QtWidgets/qsizepolicy.h \
@@ -375,4 +385,6 @@ C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBacku
   C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/time.h \
   C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/vadefs.h \
   C:/Qt/Tools/mingw1310_64/x86_64-w64-mingw32/include/wchar.h \
-  C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/core/backup/BackupService.h
+  C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/core/backup/BackupService.h \
+  C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/database/DatabaseManager.h \
+  C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/models/BackupRecord.h
