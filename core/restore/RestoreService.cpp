@@ -251,6 +251,11 @@ RestoreResult RestoreService::restoreBackup(
                 relativePath
                 );
         }
+        if (fileInfo.fileName() ==
+            ".integrity_manifest.json") {
+
+            continue;
+        }
     }
 
     result.success =

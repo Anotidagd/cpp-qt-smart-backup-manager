@@ -8,6 +8,7 @@
 #include "../hashing/HashService.h"
 #include <QDesktopServices>
 #include <QUrl>
+#include "../integrity/IntegrityService.h"
 
 BackupResult BackupService::createBackup(
     const QString &sourcePath,
@@ -193,6 +194,23 @@ BackupResult BackupService::createBackup(
                     );
             }
         }
+    }
+    IntegrityService integrityService;
+
+    QString manifestError;
+
+    if (!integrityService.createManifest(
+            backupRoot,
+            &manifestError
+            )) {
+
+        result.errors.append(
+            manifestError
+            );
+
+        result.success = false;
+
+        return result;
     }
 
     result.success =

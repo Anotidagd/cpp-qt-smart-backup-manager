@@ -414,6 +414,18 @@
 			null
 		],
 		[
+			"C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/core/integrity/IntegrityService.h",
+			"MU",
+			"XVPI33ASST/moc_IntegrityService.cpp",
+			null
+		],
+		[
+			"C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/core/integrity/IntegrityWorker.h",
+			"MU",
+			"XVPI33ASST/moc_IntegrityWorker.cpp",
+			null
+		],
+		[
 			"C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/core/restore/RestoreService.h",
 			"MU",
 			"KS646LUCKL/moc_RestoreService.cpp",
@@ -528,6 +540,16 @@
 		],
 		[
 			"C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/core/hashing/HashService.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/core/integrity/IntegrityService.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/core/integrity/IntegrityWorker.cpp",
 			"MU",
 			null
 		],

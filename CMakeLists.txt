@@ -26,6 +26,8 @@ qt_add_executable(SmartBackupManager
     core/restore/RestoreService.cpp
     core/restore/RestoreWorker.h
     core/restore/RestoreWorker.cpp
+    core/integrity/IntegrityService.h core/integrity/IntegrityService.cpp
+    core/integrity/IntegrityWorker.h core/integrity/IntegrityWorker.cpp
 
 
 )

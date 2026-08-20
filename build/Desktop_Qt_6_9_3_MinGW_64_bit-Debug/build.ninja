@@ -121,6 +121,22 @@ build CMakeFiles/SmartBackupManager.dir/core/restore/RestoreWorker.cpp.obj: CXX_
   OBJECT_DIR = CMakeFiles\SmartBackupManager.dir
   OBJECT_FILE_DIR = CMakeFiles\SmartBackupManager.dir\core\restore
 
+build CMakeFiles/SmartBackupManager.dir/core/integrity/IntegrityService.cpp.obj: CXX_COMPILER__SmartBackupManager_unscanned_Debug C$:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/core/integrity/IntegrityService.cpp || cmake_object_order_depends_target_SmartBackupManager
+  DEFINES = -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NEEDS_QMAIN -DQT_SQL_LIB -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64
+  DEP_FILE = CMakeFiles\SmartBackupManager.dir\core\integrity\IntegrityService.cpp.obj.d
+  FLAGS = -DQT_QML_DEBUG -g -fdiagnostics-color=always
+  INCLUDES = -IC:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/build/Desktop_Qt_6_9_3_MinGW_64_bit-Debug/SmartBackupManager_autogen/include -isystem C:/Qt/6.9.3/mingw_64/include/QtCore -isystem C:/Qt/6.9.3/mingw_64/include -isystem C:/Qt/6.9.3/mingw_64/mkspecs/win32-g++ -isystem C:/Qt/6.9.3/mingw_64/include/QtWidgets -isystem C:/Qt/6.9.3/mingw_64/include/QtGui -isystem C:/Qt/6.9.3/mingw_64/include/QtSql
+  OBJECT_DIR = CMakeFiles\SmartBackupManager.dir
+  OBJECT_FILE_DIR = CMakeFiles\SmartBackupManager.dir\core\integrity
+
+build CMakeFiles/SmartBackupManager.dir/core/integrity/IntegrityWorker.cpp.obj: CXX_COMPILER__SmartBackupManager_unscanned_Debug C$:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/core/integrity/IntegrityWorker.cpp || cmake_object_order_depends_target_SmartBackupManager
+  DEFINES = -DMINGW_HAS_SECURE_API=1 -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NEEDS_QMAIN -DQT_SQL_LIB -DQT_WIDGETS_LIB -DUNICODE -DWIN32 -DWIN64 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -D_UNICODE -D_WIN64
+  DEP_FILE = CMakeFiles\SmartBackupManager.dir\core\integrity\IntegrityWorker.cpp.obj.d
+  FLAGS = -DQT_QML_DEBUG -g -fdiagnostics-color=always
+  INCLUDES = -IC:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/build/Desktop_Qt_6_9_3_MinGW_64_bit-Debug/SmartBackupManager_autogen/include -isystem C:/Qt/6.9.3/mingw_64/include/QtCore -isystem C:/Qt/6.9.3/mingw_64/include -isystem C:/Qt/6.9.3/mingw_64/mkspecs/win32-g++ -isystem C:/Qt/6.9.3/mingw_64/include/QtWidgets -isystem C:/Qt/6.9.3/mingw_64/include/QtGui -isystem C:/Qt/6.9.3/mingw_64/include/QtSql
+  OBJECT_DIR = CMakeFiles\SmartBackupManager.dir
+  OBJECT_FILE_DIR = CMakeFiles\SmartBackupManager.dir\core\integrity
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target SmartBackupManager
@@ -129,7 +145,7 @@ build CMakeFiles/SmartBackupManager.dir/core/restore/RestoreWorker.cpp.obj: CXX_
 #############################################
 # Link the executable SmartBackupManager.exe
 
-build SmartBackupManager.exe: CXX_EXECUTABLE_LINKER__SmartBackupManager_Debug CMakeFiles/SmartBackupManager.dir/SmartBackupManager_autogen/mocs_compilation.cpp.obj CMakeFiles/SmartBackupManager.dir/main.cpp.obj CMakeFiles/SmartBackupManager.dir/mainwindow.cpp.obj CMakeFiles/SmartBackupManager.dir/core/backup/BackupService.cpp.obj CMakeFiles/SmartBackupManager.dir/core/hashing/HashService.cpp.obj CMakeFiles/SmartBackupManager.dir/core/backup/BackupWorker.cpp.obj CMakeFiles/SmartBackupManager.dir/database/DatabaseManager.cpp.obj CMakeFiles/SmartBackupManager.dir/core/restore/RestoreService.cpp.obj CMakeFiles/SmartBackupManager.dir/core/restore/RestoreWorker.cpp.obj | C$:/Qt/6.9.3/mingw_64/lib/libQt6Widgets.a C$:/Qt/6.9.3/mingw_64/lib/libQt6Sql.a C$:/Qt/6.9.3/mingw_64/lib/libQt6Gui.a C$:/Qt/6.9.3/mingw_64/lib/libQt6Core.a C$:/Qt/6.9.3/mingw_64/lib/libQt6EntryPoint.a || SmartBackupManager_autogen SmartBackupManager_autogen_timestamp_deps
+build SmartBackupManager.exe: CXX_EXECUTABLE_LINKER__SmartBackupManager_Debug CMakeFiles/SmartBackupManager.dir/SmartBackupManager_autogen/mocs_compilation.cpp.obj CMakeFiles/SmartBackupManager.dir/main.cpp.obj CMakeFiles/SmartBackupManager.dir/mainwindow.cpp.obj CMakeFiles/SmartBackupManager.dir/core/backup/BackupService.cpp.obj CMakeFiles/SmartBackupManager.dir/core/hashing/HashService.cpp.obj CMakeFiles/SmartBackupManager.dir/core/backup/BackupWorker.cpp.obj CMakeFiles/SmartBackupManager.dir/database/DatabaseManager.cpp.obj CMakeFiles/SmartBackupManager.dir/core/restore/RestoreService.cpp.obj CMakeFiles/SmartBackupManager.dir/core/restore/RestoreWorker.cpp.obj CMakeFiles/SmartBackupManager.dir/core/integrity/IntegrityService.cpp.obj CMakeFiles/SmartBackupManager.dir/core/integrity/IntegrityWorker.cpp.obj | C$:/Qt/6.9.3/mingw_64/lib/libQt6Widgets.a C$:/Qt/6.9.3/mingw_64/lib/libQt6Sql.a C$:/Qt/6.9.3/mingw_64/lib/libQt6Gui.a C$:/Qt/6.9.3/mingw_64/lib/libQt6Core.a C$:/Qt/6.9.3/mingw_64/lib/libQt6EntryPoint.a || SmartBackupManager_autogen SmartBackupManager_autogen_timestamp_deps
   FLAGS = -DQT_QML_DEBUG -g
   LINK_FLAGS = -mwindows
   LINK_LIBRARIES = C:/Qt/6.9.3/mingw_64/lib/libQt6Widgets.a  C:/Qt/6.9.3/mingw_64/lib/libQt6Sql.a  C:/Qt/6.9.3/mingw_64/lib/libQt6Gui.a  -ld3d11  -ldxgi  -ldxguid  -ld3d12  C:/Qt/6.9.3/mingw_64/lib/libQt6Core.a  -lmpr  -luserenv  -lmingw32  C:/Qt/6.9.3/mingw_64/lib/libQt6EntryPoint.a  -lshell32  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32

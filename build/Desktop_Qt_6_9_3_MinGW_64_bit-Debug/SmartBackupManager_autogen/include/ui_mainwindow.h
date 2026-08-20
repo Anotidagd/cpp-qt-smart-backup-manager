@@ -110,7 +110,7 @@ public:
 
         progressLabel = new QLabel(centralwidget);
         progressLabel->setObjectName("progressLabel");
-        progressLabel->setGeometry(QRect(80, 310, 37, 12));
+        progressLabel->setGeometry(QRect(80, 310, 71, 16));
         backupProgressBar = new QProgressBar(centralwidget);
         backupProgressBar->setObjectName("backupProgressBar");
         backupProgressBar->setGeometry(QRect(80, 330, 561, 23));
