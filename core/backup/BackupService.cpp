@@ -6,6 +6,8 @@
 #include <QFile>
 #include <QFileInfo>
 #include "../hashing/HashService.h"
+#include <QDesktopServices>
+#include <QUrl>
 
 BackupResult BackupService::createBackup(
     const QString &sourcePath,
@@ -267,3 +269,4 @@ int BackupService::countFiles(
 
     return totalFiles;
 }
+

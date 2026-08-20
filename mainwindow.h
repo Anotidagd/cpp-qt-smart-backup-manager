@@ -7,6 +7,7 @@
 #include "core/backup/BackupService.h"
 #include "database/DatabaseManager.h"
 #include <QDateTime>
+#include "core/restore/RestoreService.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -16,6 +17,7 @@ QT_END_NAMESPACE
 
 class QThread;
 class BackupWorker;
+class RestoreWorker;
 
 class MainWindow : public QMainWindow
 {
@@ -41,6 +43,18 @@ private slots:
         const BackupResult &result
         );
     void refreshBackupHistory();
+    void handleHistorySelection();
+    void openSelectedBackupFolder();
+    void restoreSelectedBackup();
+    void handleRestoreProgress(
+        int processedFiles,
+        int totalFiles,
+        const QString &currentFile
+        );
+
+    void handleRestoreFinished(
+        const RestoreResult &result
+        );
 
 private:
     bool validatePaths(
@@ -58,6 +72,14 @@ private:
     bool m_databaseAvailable = false;
 
     QDateTime m_backupStartedAt;
+    QString selectedBackupPath() const;
+    QThread *m_restoreThread = nullptr;
+    RestoreWorker *m_restoreWorker = nullptr;
+
+    bool m_restoreRunning = false;
+
+
+
 
 
 

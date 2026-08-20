@@ -644,6 +644,10 @@ SmartBackupManager_autogen/timestamp: \
 	C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/core/backup/BackupWorker.h \
 	C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/core/hashing/HashService.cpp \
 	C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/core/hashing/HashService.h \
+	C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/core/restore/RestoreService.cpp \
+	C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/core/restore/RestoreService.h \
+	C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/core/restore/RestoreWorker.cpp \
+	C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/core/restore/RestoreWorker.h \
 	C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/database/DatabaseManager.cpp \
 	C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/database/DatabaseManager.h \
 	C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/main.cpp \

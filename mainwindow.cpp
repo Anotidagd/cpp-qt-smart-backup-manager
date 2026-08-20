@@ -3,6 +3,10 @@
 
 #include "core/backup/BackupService.h"
 #include "core/backup/BackupWorker.h"
+#include "core/restore/RestoreWorker.h"
+#include <QDesktopServices>
+#include <QUrl>
+
 
 #include <QDir>
 #include <QFileDialog>
@@ -80,6 +84,7 @@ bool isSameOrChildDirectory(
         );
 }
 
+
 } // namespace
 
 
@@ -104,7 +109,12 @@ MainWindow::MainWindow(QWidget *parent)
         qWarning()
             << databaseError;
     }
-    ////////////////////////
+    qRegisterMetaType<RestoreResult>(
+        "RestoreResult"
+        );
+    ///////
+    ui->openBackupButton->setEnabled(false);
+    ui->restoreBackupButton->setEnabled(false);
     ui->historyTable->setColumnCount(8);
 
     ui->historyTable->setHorizontalHeaderLabels(
@@ -163,7 +173,7 @@ MainWindow::MainWindow(QWidget *parent)
         this,
         &MainWindow::refreshBackupHistory
         );
-    //////////////////////
+    ///////////////
 
 
     // Required because BackupResult travels
@@ -489,6 +499,13 @@ void MainWindow::handleStartBackup()
         &QThread::started,
         m_backupWorker,
         &BackupWorker::process
+        );
+    qRegisterMetaType<BackupResult>(
+        "BackupResult"
+        );
+
+    qRegisterMetaType<RestoreResult>(
+        "RestoreResult"
         );
 
     // Worker reports progress to GUI.
@@ -892,6 +909,15 @@ void MainWindow::refreshBackupHistory()
             Qt::UserRole,
             record.backupPath
             );
+        sourceItem->setData(
+            Qt::UserRole + 1,
+            record.id
+            );
+
+        sourceItem->setData(
+            Qt::UserRole + 2,
+            record.sourcePath
+            );
 
         ui->historyTable->setItem(
             row,
@@ -947,5 +973,331 @@ void MainWindow::refreshBackupHistory()
             "%1 backup record(s) loaded."
             )
             .arg(records.size())
+        );
+    connect(
+        ui->historyTable,
+        &QTableWidget::itemSelectionChanged,
+        this,
+        &MainWindow::handleHistorySelection
+        );
+
+    connect(
+        ui->openBackupButton,
+        &QPushButton::clicked,
+        this,
+        &MainWindow::openSelectedBackupFolder
+        );
+
+    connect(
+        ui->restoreBackupButton,
+        &QPushButton::clicked,
+        this,
+        &MainWindow::restoreSelectedBackup
+        );
+}
+void MainWindow::handleHistorySelection()
+{
+    const bool hasSelection =
+        !ui->historyTable->selectedItems().isEmpty();
+
+    ui->openBackupButton->setEnabled(
+        hasSelection
+        );
+
+    ui->restoreBackupButton->setEnabled(
+        hasSelection
+        );
+}
+QString MainWindow::selectedBackupPath() const
+{
+    const int row =
+        ui->historyTable->currentRow();
+
+    if (row < 0) {
+        return {};
+    }
+
+    QTableWidgetItem *sourceItem =
+        ui->historyTable->item(
+            row,
+            2
+            );
+
+    if (sourceItem == nullptr) {
+        return {};
+    }
+
+    return sourceItem
+        ->data(Qt::UserRole)
+        .toString();
+}
+
+void MainWindow::restoreSelectedBackup()
+{
+    if (m_backupRunning ||
+        m_restoreRunning) {
+
+        return;
+    }
+
+    const QString backupPath =
+        selectedBackupPath();
+
+    if (backupPath.isEmpty()) {
+        return;
+    }
+
+    if (!QDir(backupPath).exists()) {
+
+        QMessageBox::warning(
+            this,
+            tr("Backup Not Found"),
+            tr(
+                "The selected backup directory no longer exists."
+                )
+            );
+
+        return;
+    }
+
+    const QString destinationPath =
+        QFileDialog::getExistingDirectory(
+            this,
+            tr("Select Restore Destination"),
+            QDir::homePath(),
+            QFileDialog::ShowDirsOnly |
+                QFileDialog::DontResolveSymlinks
+            );
+
+    if (destinationPath.isEmpty()) {
+        return;
+    }
+
+    m_restoreRunning = true;
+
+    ui->restoreBackupButton->setEnabled(
+        false
+        );
+
+    ui->startBackupButton->setEnabled(
+        false
+        );
+
+    ui->backupProgressBar->setRange(
+        0,
+        0
+        );
+
+    ui->progressLabel->setText(
+        "Preparing restore..."
+        );
+
+    statusBar()->showMessage(
+        "Preparing restore..."
+        );
+
+    m_restoreThread =
+        new QThread(this);
+
+    m_restoreWorker =
+        new RestoreWorker(
+            backupPath,
+            destinationPath
+            );
+
+    m_restoreWorker->moveToThread(
+        m_restoreThread
+        );
+
+    connect(
+        m_restoreThread,
+        &QThread::started,
+        m_restoreWorker,
+        &RestoreWorker::process
+        );
+
+    connect(
+        m_restoreWorker,
+        &RestoreWorker::progressChanged,
+        this,
+        &MainWindow::handleRestoreProgress
+        );
+
+    connect(
+        m_restoreWorker,
+        &RestoreWorker::finished,
+        this,
+        &MainWindow::handleRestoreFinished
+        );
+
+    connect(
+        m_restoreWorker,
+        &RestoreWorker::finished,
+        m_restoreThread,
+        &QThread::quit
+        );
+
+    connect(
+        m_restoreWorker,
+        &RestoreWorker::finished,
+        m_restoreWorker,
+        &QObject::deleteLater
+        );
+
+    connect(
+        m_restoreThread,
+        &QThread::finished,
+        m_restoreThread,
+        &QObject::deleteLater
+        );
+
+    connect(
+        m_restoreThread,
+        &QThread::finished,
+        this,
+        [this]()
+        {
+            m_restoreThread = nullptr;
+            m_restoreWorker = nullptr;
+        }
+        );
+
+    m_restoreThread->start();
+}
+
+void MainWindow::handleRestoreProgress(
+    int processedFiles,
+    int totalFiles,
+    const QString &currentFile
+    )
+{
+    if (totalFiles <= 0) {
+
+        ui->backupProgressBar->setRange(
+            0,
+            0
+            );
+
+        return;
+    }
+
+    ui->backupProgressBar->setRange(
+        0,
+        totalFiles
+        );
+
+    ui->backupProgressBar->setValue(
+        processedFiles
+        );
+
+    ui->progressLabel->setText(
+        QString(
+            "Restoring %1 / %2 — %3"
+            )
+            .arg(processedFiles)
+            .arg(totalFiles)
+            .arg(currentFile)
+        );
+}
+
+void MainWindow::handleRestoreFinished(
+    const RestoreResult &result
+    )
+{
+    m_restoreRunning = false;
+
+    updateStartButtonState();
+    handleHistorySelection();
+
+    if (ui->backupProgressBar->maximum() > 0) {
+
+        ui->backupProgressBar->setValue(
+            ui->backupProgressBar->maximum()
+            );
+    }
+
+    if (result.success) {
+
+        ui->progressLabel->setText(
+            "Restore completed successfully."
+            );
+
+        statusBar()->showMessage(
+            "Restore completed successfully."
+            );
+
+        QMessageBox::information(
+            this,
+            tr("Restore Complete"),
+            tr(
+                "Restore completed successfully.\n\n"
+                "Files restored: %1\n"
+                "Files verified: %2\n"
+                "Files skipped: %3\n\n"
+                "Restore location:\n%4"
+                )
+                .arg(result.restoredFiles)
+                .arg(result.verifiedFiles)
+                .arg(result.skippedFiles)
+                .arg(result.restorePath)
+            );
+
+        return;
+    }
+
+    QString details;
+
+    if (!result.errors.isEmpty()) {
+
+        details =
+            "\n\nErrors:\n"
+            + result.errors.join("\n");
+    }
+
+    QMessageBox::warning(
+        this,
+        tr("Restore Completed With Errors"),
+        tr(
+            "Restore completed with errors.\n\n"
+            "Restored: %1\n"
+            "Verified: %2\n"
+            "Failed: %3\n"
+            "Integrity failures: %4\n"
+            "Skipped: %5"
+            )
+                .arg(result.restoredFiles)
+                .arg(result.verifiedFiles)
+                .arg(result.failedFiles)
+                .arg(result.integrityFailures)
+                .arg(result.skippedFiles)
+            + details
+        );
+}
+void MainWindow::openSelectedBackupFolder()
+{
+    const QString backupPath =
+        selectedBackupPath();
+
+    if (backupPath.isEmpty()) {
+        return;
+    }
+
+    if (!QDir(backupPath).exists()) {
+
+        QMessageBox::warning(
+            this,
+            tr("Backup Not Found"),
+            tr(
+                "The backup directory no longer exists:\n\n%1"
+                ).arg(backupPath)
+            );
+
+        return;
+    }
+
+    QDesktopServices::openUrl(
+        QUrl::fromLocalFile(
+            backupPath
+            )
         );
 }

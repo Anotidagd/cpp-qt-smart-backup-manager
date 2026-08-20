@@ -51,7 +51,13 @@ template <> constexpr inline auto MainWindow::qt_create_metaobjectdata<qt_meta_t
         "handleBackupFinished",
         "BackupResult",
         "result",
-        "refreshBackupHistory"
+        "refreshBackupHistory",
+        "handleHistorySelection",
+        "openSelectedBackupFolder",
+        "restoreSelectedBackup",
+        "handleRestoreProgress",
+        "handleRestoreFinished",
+        "RestoreResult"
     };
 
     QtMocHelpers::UintData qt_methods {
@@ -73,6 +79,20 @@ template <> constexpr inline auto MainWindow::qt_create_metaobjectdata<qt_meta_t
         }}),
         // Slot 'refreshBackupHistory'
         QtMocHelpers::SlotData<void()>(13, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'handleHistorySelection'
+        QtMocHelpers::SlotData<void()>(14, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'openSelectedBackupFolder'
+        QtMocHelpers::SlotData<void()>(15, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'restoreSelectedBackup'
+        QtMocHelpers::SlotData<void()>(16, 2, QMC::AccessPrivate, QMetaType::Void),
+        // Slot 'handleRestoreProgress'
+        QtMocHelpers::SlotData<void(int, int, const QString &)>(17, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { QMetaType::Int, 7 }, { QMetaType::Int, 8 }, { QMetaType::QString, 9 },
+        }}),
+        // Slot 'handleRestoreFinished'
+        QtMocHelpers::SlotData<void(const RestoreResult &)>(18, 2, QMC::AccessPrivate, QMetaType::Void, {{
+            { 0x80000000 | 19, 12 },
+        }}),
     };
     QtMocHelpers::UintData qt_properties {
     };
@@ -103,6 +123,11 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 4: _t->handleBackupProgress((*reinterpret_cast< std::add_pointer_t<int>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[3]))); break;
         case 5: _t->handleBackupFinished((*reinterpret_cast< std::add_pointer_t<BackupResult>>(_a[1]))); break;
         case 6: _t->refreshBackupHistory(); break;
+        case 7: _t->handleHistorySelection(); break;
+        case 8: _t->openSelectedBackupFolder(); break;
+        case 9: _t->restoreSelectedBackup(); break;
+        case 10: _t->handleRestoreProgress((*reinterpret_cast< std::add_pointer_t<int>>(_a[1])),(*reinterpret_cast< std::add_pointer_t<int>>(_a[2])),(*reinterpret_cast< std::add_pointer_t<QString>>(_a[3]))); break;
+        case 11: _t->handleRestoreFinished((*reinterpret_cast< std::add_pointer_t<RestoreResult>>(_a[1]))); break;
         default: ;
         }
     }
@@ -114,6 +139,13 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
             default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
             case 0:
                 *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< BackupResult >(); break;
+            }
+            break;
+        case 11:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType(); break;
+            case 0:
+                *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType::fromType< RestoreResult >(); break;
             }
             break;
         }
@@ -139,14 +171,14 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 7)
+        if (_id < 12)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 7;
+        _id -= 12;
     }
     if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 7)
+        if (_id < 12)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 7;
+        _id -= 12;
     }
     return _id;
 }

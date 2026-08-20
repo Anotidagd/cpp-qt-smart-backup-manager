@@ -1,4 +1,6 @@
 #include "BackupWorker.h"
+#include <QDesktopServices>
+#include <QUrl>
 
 BackupWorker::BackupWorker(
     const QString &sourcePath,
@@ -36,3 +38,4 @@ void BackupWorker::process()
 
     emit finished(result);
 }
+

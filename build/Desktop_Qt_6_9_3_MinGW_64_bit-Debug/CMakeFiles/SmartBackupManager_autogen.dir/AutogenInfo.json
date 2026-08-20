@@ -414,6 +414,18 @@
 			null
 		],
 		[
+			"C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/core/restore/RestoreService.h",
+			"MU",
+			"KS646LUCKL/moc_RestoreService.cpp",
+			null
+		],
+		[
+			"C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/core/restore/RestoreWorker.h",
+			"MU",
+			"KS646LUCKL/moc_RestoreWorker.cpp",
+			null
+		],
+		[
 			"C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/database/DatabaseManager.h",
 			"MU",
 			"BL3K65LMA5/moc_DatabaseManager.cpp",
@@ -516,6 +528,16 @@
 		],
 		[
 			"C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/core/hashing/HashService.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/core/restore/RestoreService.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/Anotida.G.Damba/Documents/Computer_Science_Course/QT_Creator/SmartBackupManager/core/restore/RestoreWorker.cpp",
 			"MU",
 			null
 		],

@@ -46,6 +46,8 @@ public:
     QGroupBox *backupHistoryGroup;
     QPushButton *refreshHistoryButton;
     QTableWidget *historyTable;
+    QPushButton *restoreBackupButton;
+    QPushButton *openBackupButton;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -53,7 +55,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(900, 600);
+        MainWindow->resize(900, 621);
         MainWindow->setMinimumSize(QSize(900, 600));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
@@ -142,6 +144,14 @@ public:
         historyTable->setObjectName("historyTable");
         historyTable->setGeometry(QRect(10, 50, 601, 131));
         historyTable->setColumnCount(9);
+        restoreBackupButton = new QPushButton(centralwidget);
+        restoreBackupButton->setObjectName("restoreBackupButton");
+        restoreBackupButton->setEnabled(false);
+        restoreBackupButton->setGeometry(QRect(570, 550, 151, 21));
+        openBackupButton = new QPushButton(centralwidget);
+        openBackupButton->setObjectName("openBackupButton");
+        openBackupButton->setEnabled(false);
+        openBackupButton->setGeometry(QRect(480, 550, 80, 21));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
@@ -188,6 +198,8 @@ public:
         ___qtablewidgetitem6->setText(QCoreApplication::translate("MainWindow", "Failed", nullptr));
         QTableWidgetItem *___qtablewidgetitem7 = historyTable->horizontalHeaderItem(7);
         ___qtablewidgetitem7->setText(QCoreApplication::translate("MainWindow", "Duration", nullptr));
+        restoreBackupButton->setText(QCoreApplication::translate("MainWindow", "Restore Selected Backup", nullptr));
+        openBackupButton->setText(QCoreApplication::translate("MainWindow", "Backup folder", nullptr));
     } // retranslateUi
 
 };

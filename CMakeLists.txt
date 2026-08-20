@@ -22,6 +22,10 @@ qt_add_executable(SmartBackupManager
     database/DatabaseManager.cpp
     database/DatabaseManager.h
     models/BackupRecord.h
+    core/restore/RestoreService.h
+    core/restore/RestoreService.cpp
+    core/restore/RestoreWorker.h
+    core/restore/RestoreWorker.cpp
 
 
 )

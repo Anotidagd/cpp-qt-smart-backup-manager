@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>900</width>
-    <height>600</height>
+    <height>621</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -227,6 +227,38 @@
      </column>
      <column/>
     </widget>
+   </widget>
+   <widget class="QPushButton" name="restoreBackupButton">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>570</x>
+      <y>550</y>
+      <width>151</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Restore Selected Backup</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="openBackupButton">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>480</x>
+      <y>550</y>
+      <width>80</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Backup folder</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
