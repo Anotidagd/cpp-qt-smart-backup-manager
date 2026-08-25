@@ -125,6 +125,7 @@ MainWindow::MainWindow(QWidget *parent)
     ///////
     ui->openBackupButton->setEnabled(false);
     ui->restoreBackupButton->setEnabled(false);
+    ui->checkIntegrityButton->setEnabled(false);
     ui->historyTable->setColumnCount(8);
 
     ui->historyTable->setHorizontalHeaderLabels(
@@ -183,14 +184,33 @@ MainWindow::MainWindow(QWidget *parent)
         this,
         &MainWindow::refreshBackupHistory
         );
+
+    connect(
+        ui->historyTable,
+        &QTableWidget::itemSelectionChanged,
+        this,
+        &MainWindow::handleHistorySelection
+        );
+
+    connect(
+        ui->openBackupButton,
+        &QPushButton::clicked,
+        this,
+        &MainWindow::openSelectedBackupFolder
+        );
+
+    connect(
+        ui->restoreBackupButton,
+        &QPushButton::clicked,
+        this,
+        &MainWindow::restoreSelectedBackup
+        );
     ///////////////
 
 
     // Required because BackupResult travels
     // between worker and GUI threads.
-    qRegisterMetaType<BackupResult>(
-        "BackupResult"
-        );
+
 
     ui->sourcePathEdit->setReadOnly(true);
     ui->destinationPathEdit->setReadOnly(true);
@@ -523,13 +543,6 @@ void MainWindow::handleStartBackup()
         m_backupWorker,
         &BackupWorker::process
         );
-    qRegisterMetaType<BackupResult>(
-        "BackupResult"
-        );
-
-    qRegisterMetaType<RestoreResult>(
-        "RestoreResult"
-        );
 
     // Worker reports progress to GUI.
     connect(
@@ -709,6 +722,10 @@ void MainWindow::handleBackupFinished(
 
             qWarning()
             << databaseError;
+
+        } else {
+
+            refreshBackupHistory();
         }
     }
 
@@ -997,26 +1014,7 @@ void MainWindow::refreshBackupHistory()
             )
             .arg(records.size())
         );
-    connect(
-        ui->historyTable,
-        &QTableWidget::itemSelectionChanged,
-        this,
-        &MainWindow::handleHistorySelection
-        );
 
-    connect(
-        ui->openBackupButton,
-        &QPushButton::clicked,
-        this,
-        &MainWindow::openSelectedBackupFolder
-        );
-
-    connect(
-        ui->restoreBackupButton,
-        &QPushButton::clicked,
-        this,
-        &MainWindow::restoreSelectedBackup
-        );
 }
 void MainWindow::handleHistorySelection()
 {
