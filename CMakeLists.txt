@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.19)
 project(SmartBackupManager LANGUAGES CXX)
+set(CMAKE_AUTORCC ON)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Sql)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Sql)
@@ -30,6 +31,8 @@ qt_add_executable(SmartBackupManager
     core/integrity/IntegrityService.cpp
     core/integrity/IntegrityWorker.h
     core/integrity/IntegrityWorker.cpp
+    resources/styles/main.qss
+    resources/resources.qrc
 
 
 )

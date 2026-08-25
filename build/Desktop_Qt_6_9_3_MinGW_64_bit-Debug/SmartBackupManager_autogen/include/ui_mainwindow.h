@@ -11,7 +11,6 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
@@ -31,16 +30,14 @@ class Ui_MainWindow
 public:
     QWidget *centralwidget;
     QLabel *titleLabel;
-    QLabel *subtitleLabel;
     QGroupBox *backupConfigurationGroup;
-    QGridLayout *gridLayout;
     QLabel *sourceLabel;
     QLineEdit *sourcePathEdit;
     QPushButton *browseSourceButton;
     QLabel *destinationLabel;
-    QLineEdit *destinationPathEdit;
-    QPushButton *browseDestinationButton;
     QPushButton *startBackupButton;
+    QPushButton *browseDestinationButton;
+    QLineEdit *destinationPathEdit;
     QLabel *progressLabel;
     QProgressBar *backupProgressBar;
     QGroupBox *backupHistoryGroup;
@@ -49,6 +46,7 @@ public:
     QPushButton *openBackupButton;
     QPushButton *restoreBackupButton;
     QPushButton *checkIntegrityButton;
+    QLabel *label;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -56,73 +54,63 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName("MainWindow");
-        MainWindow->resize(900, 621);
-        MainWindow->setMinimumSize(QSize(900, 600));
+        MainWindow->resize(1100, 720);
+        MainWindow->setMinimumSize(QSize(1100, 720));
+        MainWindow->setStyleSheet(QString::fromUtf8("background-color:rgb(28, 38, 51);\n"
+"color: rgb(244, 247, 251);"));
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName("centralwidget");
         titleLabel = new QLabel(centralwidget);
         titleLabel->setObjectName("titleLabel");
-        titleLabel->setGeometry(QRect(80, 20, 181, 16));
-        subtitleLabel = new QLabel(centralwidget);
-        subtitleLabel->setObjectName("subtitleLabel");
-        subtitleLabel->setGeometry(QRect(80, 40, 241, 16));
+        titleLabel->setGeometry(QRect(380, 20, 441, 41));
         backupConfigurationGroup = new QGroupBox(centralwidget);
         backupConfigurationGroup->setObjectName("backupConfigurationGroup");
-        backupConfigurationGroup->setGeometry(QRect(80, 90, 601, 191));
-        gridLayout = new QGridLayout(backupConfigurationGroup);
-        gridLayout->setObjectName("gridLayout");
+        backupConfigurationGroup->setGeometry(QRect(200, 110, 671, 251));
+        backupConfigurationGroup->setStyleSheet(QString::fromUtf8("background:#171D26;\n"
+"border-color: rgb(41, 52, 69);\n"
+"font: 700 9pt \"Caviar Dreams\";\n"
+""));
         sourceLabel = new QLabel(backupConfigurationGroup);
         sourceLabel->setObjectName("sourceLabel");
-
-        gridLayout->addWidget(sourceLabel, 0, 0, 1, 1);
-
+        sourceLabel->setGeometry(QRect(10, 40, 81, 16));
         sourcePathEdit = new QLineEdit(backupConfigurationGroup);
         sourcePathEdit->setObjectName("sourcePathEdit");
+        sourcePathEdit->setGeometry(QRect(9, 65, 501, 23));
         sourcePathEdit->setReadOnly(true);
-
-        gridLayout->addWidget(sourcePathEdit, 1, 0, 1, 1);
-
         browseSourceButton = new QPushButton(backupConfigurationGroup);
         browseSourceButton->setObjectName("browseSourceButton");
-
-        gridLayout->addWidget(browseSourceButton, 1, 1, 1, 1);
-
+        browseSourceButton->setGeometry(QRect(543, 65, 80, 24));
         destinationLabel = new QLabel(backupConfigurationGroup);
         destinationLabel->setObjectName("destinationLabel");
-
-        gridLayout->addWidget(destinationLabel, 2, 0, 1, 1);
-
-        destinationPathEdit = new QLineEdit(backupConfigurationGroup);
-        destinationPathEdit->setObjectName("destinationPathEdit");
-        destinationPathEdit->setReadOnly(true);
-
-        gridLayout->addWidget(destinationPathEdit, 3, 0, 1, 1);
-
-        browseDestinationButton = new QPushButton(backupConfigurationGroup);
-        browseDestinationButton->setObjectName("browseDestinationButton");
-
-        gridLayout->addWidget(browseDestinationButton, 3, 1, 1, 1);
-
+        destinationLabel->setGeometry(QRect(9, 110, 105, 16));
         startBackupButton = new QPushButton(backupConfigurationGroup);
         startBackupButton->setObjectName("startBackupButton");
         startBackupButton->setEnabled(false);
-
-        gridLayout->addWidget(startBackupButton, 4, 1, 1, 1);
-
+        startBackupButton->setGeometry(QRect(448, 200, 181, 24));
+        browseDestinationButton = new QPushButton(backupConfigurationGroup);
+        browseDestinationButton->setObjectName("browseDestinationButton");
+        browseDestinationButton->setGeometry(QRect(540, 140, 80, 24));
+        destinationPathEdit = new QLineEdit(backupConfigurationGroup);
+        destinationPathEdit->setObjectName("destinationPathEdit");
+        destinationPathEdit->setGeometry(QRect(10, 140, 501, 23));
+        destinationPathEdit->setReadOnly(true);
         progressLabel = new QLabel(centralwidget);
         progressLabel->setObjectName("progressLabel");
-        progressLabel->setGeometry(QRect(80, 290, 141, 16));
+        progressLabel->setGeometry(QRect(200, 370, 281, 16));
         backupProgressBar = new QProgressBar(centralwidget);
         backupProgressBar->setObjectName("backupProgressBar");
-        backupProgressBar->setGeometry(QRect(80, 310, 561, 23));
+        backupProgressBar->setGeometry(QRect(200, 390, 561, 23));
         backupProgressBar->setMaximum(0);
         backupProgressBar->setValue(0);
         backupHistoryGroup = new QGroupBox(centralwidget);
         backupHistoryGroup->setObjectName("backupHistoryGroup");
-        backupHistoryGroup->setGeometry(QRect(80, 340, 641, 231));
+        backupHistoryGroup->setGeometry(QRect(200, 420, 671, 261));
+        backupHistoryGroup->setStyleSheet(QString::fromUtf8("background:#171D26;\n"
+"border-color: rgb(41, 52, 69);\n"
+"font: 700 9pt \"Caviar Dreams\";"));
         refreshHistoryButton = new QPushButton(backupHistoryGroup);
         refreshHistoryButton->setObjectName("refreshHistoryButton");
-        refreshHistoryButton->setGeometry(QRect(520, 27, 91, 21));
+        refreshHistoryButton->setGeometry(QRect(490, 20, 121, 21));
         historyTable = new QTableWidget(backupHistoryGroup);
         if (historyTable->columnCount() < 9)
             historyTable->setColumnCount(9);
@@ -143,23 +131,30 @@ public:
         QTableWidgetItem *__qtablewidgetitem7 = new QTableWidgetItem();
         historyTable->setHorizontalHeaderItem(7, __qtablewidgetitem7);
         historyTable->setObjectName("historyTable");
-        historyTable->setGeometry(QRect(10, 50, 601, 131));
+        historyTable->setGeometry(QRect(10, 70, 601, 131));
+        historyTable->setStyleSheet(QString::fromUtf8("background:#171D26;\n"
+"background:#171D26;\n"
+"border-color: rgb(41, 52, 69);\n"
+"font: 700 9pt \"Caviar Dreams\";"));
         historyTable->setColumnCount(9);
         openBackupButton = new QPushButton(backupHistoryGroup);
         openBackupButton->setObjectName("openBackupButton");
         openBackupButton->setEnabled(false);
-        openBackupButton->setGeometry(QRect(229, 190, 111, 21));
+        openBackupButton->setGeometry(QRect(110, 220, 161, 21));
         restoreBackupButton = new QPushButton(backupHistoryGroup);
         restoreBackupButton->setObjectName("restoreBackupButton");
         restoreBackupButton->setEnabled(false);
-        restoreBackupButton->setGeometry(QRect(350, 190, 151, 21));
+        restoreBackupButton->setGeometry(QRect(280, 220, 181, 21));
         checkIntegrityButton = new QPushButton(backupHistoryGroup);
         checkIntegrityButton->setObjectName("checkIntegrityButton");
-        checkIntegrityButton->setGeometry(QRect(510, 190, 101, 21));
+        checkIntegrityButton->setGeometry(QRect(480, 220, 131, 21));
+        label = new QLabel(centralwidget);
+        label->setObjectName("label");
+        label->setGeometry(QRect(460, 60, 221, 16));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
-        menubar->setGeometry(QRect(0, 0, 900, 21));
+        menubar->setGeometry(QRect(0, 0, 1100, 21));
         MainWindow->setMenuBar(menubar);
         statusbar = new QStatusBar(MainWindow);
         statusbar->setObjectName("statusbar");
@@ -174,15 +169,14 @@ public:
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "Smart Backup Manager", nullptr));
         titleLabel->setText(QCoreApplication::translate("MainWindow", "Smart Backup Manager", nullptr));
-        subtitleLabel->setText(QCoreApplication::translate("MainWindow", "Protect your files and verfiy their intergrity", nullptr));
         backupConfigurationGroup->setTitle(QCoreApplication::translate("MainWindow", "Backup Configuration", nullptr));
         sourceLabel->setText(QCoreApplication::translate("MainWindow", "Source Folder", nullptr));
         sourcePathEdit->setPlaceholderText(QCoreApplication::translate("MainWindow", "Select the folder you want to protect", nullptr));
         browseSourceButton->setText(QCoreApplication::translate("MainWindow", "Browse", nullptr));
         destinationLabel->setText(QCoreApplication::translate("MainWindow", "Destination Folder", nullptr));
-        destinationPathEdit->setPlaceholderText(QCoreApplication::translate("MainWindow", "select where backups should be stored", nullptr));
-        browseDestinationButton->setText(QCoreApplication::translate("MainWindow", "Browse", nullptr));
         startBackupButton->setText(QCoreApplication::translate("MainWindow", "Start Backup", nullptr));
+        browseDestinationButton->setText(QCoreApplication::translate("MainWindow", "Browse", nullptr));
+        destinationPathEdit->setPlaceholderText(QCoreApplication::translate("MainWindow", "select where backups should be stored", nullptr));
         progressLabel->setText(QCoreApplication::translate("MainWindow", "Ready", nullptr));
         backupHistoryGroup->setTitle(QCoreApplication::translate("MainWindow", "Backup History", nullptr));
         refreshHistoryButton->setText(QCoreApplication::translate("MainWindow", "Refresh History", nullptr));
@@ -205,6 +199,7 @@ public:
         openBackupButton->setText(QCoreApplication::translate("MainWindow", "Open Backup folder", nullptr));
         restoreBackupButton->setText(QCoreApplication::translate("MainWindow", "Restore Selected Backup", nullptr));
         checkIntegrityButton->setText(QCoreApplication::translate("MainWindow", "Check Integrity", nullptr));
+        label->setText(QCoreApplication::translate("MainWindow", "Backup \342\200\242 Restore \342\200\242 Integrity", nullptr));
     } // retranslateUi
 
 };

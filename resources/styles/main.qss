@@ -1,0 +1,542 @@
+/* =========================================================
+   SMART BACKUP MANAGER
+   Main Application Theme
+   ========================================================= */
+
+
+/* -------------------------
+   GLOBAL
+   ------------------------- */
+
+QMainWindow {
+    background-color: #0F141B;
+}
+
+QWidget {
+    color: #F4F7FB;
+    font-family: "Segoe UI";
+    font-size: 10pt;
+}
+
+
+/* -------------------------
+   CENTRAL WIDGET
+   ------------------------- */
+
+QWidget#centralwidget {
+    background-color: #0F141B;
+}
+
+
+/* -------------------------
+   HEADER
+   ------------------------- */
+
+QFrame#headerFrame {
+    background-color: transparent;
+    border: none;
+}
+
+QLabel#titleLabel {
+    color: #F8FAFC;
+    font-size: 22pt;
+    font-weight: 700;
+}
+
+QLabel#subtitleLabel {
+    color: #94A3B8;
+    font-size: 10pt;
+}
+
+QLabel#statusIndicatorLabel {
+    color: #22C55E;
+    font-size: 10pt;
+    font-weight: 600;
+
+    background-color: rgba(34, 197, 94, 0.10);
+
+    border: 1px solid rgba(34, 197, 94, 0.25);
+    border-radius: 12px;
+
+    padding: 6px 12px;
+}
+
+
+/* -------------------------
+   BACKUP CARD
+   ------------------------- */
+
+QFrame#backupCard {
+    background-color: #171D26;
+
+    border: 1px solid #293445;
+    border-radius: 12px;
+}
+
+
+/* If you kept the original group box */
+QGroupBox#backupConfigurationGroup {
+    background-color: #171D26;
+
+    border: 1px solid #293445;
+    border-radius: 12px;
+
+    margin-top: 18px;
+    padding-top: 18px;
+
+    font-weight: 600;
+    color: #CBD5E1;
+}
+
+QGroupBox#backupConfigurationGroup::title {
+    subcontrol-origin: margin;
+    subcontrol-position: top left;
+
+    left: 16px;
+    padding: 0 6px;
+
+    color: #94A3B8;
+}
+
+
+/* -------------------------
+   GENERAL LABELS
+   ------------------------- */
+
+QLabel {
+    background-color: transparent;
+    color: #CBD5E1;
+}
+
+QLabel#sourceLabel,
+QLabel#destinationLabel {
+    color: #94A3B8;
+    font-size: 9pt;
+    font-weight: 600;
+}
+
+
+/* -------------------------
+   PATH INPUTS
+   ------------------------- */
+
+QLineEdit {
+    background-color: #111720;
+
+    color: #E2E8F0;
+
+    border: 1px solid #2B3647;
+    border-radius: 8px;
+
+    padding: 9px 12px;
+
+    min-height: 20px;
+
+    selection-background-color: #3B82F6;
+}
+
+QLineEdit:hover {
+    border: 1px solid #3A475A;
+}
+
+QLineEdit:focus {
+    border: 1px solid #3B82F6;
+}
+
+QLineEdit:disabled {
+    background-color: #121820;
+    color: #64748B;
+}
+
+
+/* -------------------------
+   GENERAL BUTTON
+   ------------------------- */
+
+QPushButton {
+    background-color: #1D2530;
+
+    color: #E2E8F0;
+
+    border: 1px solid #334155;
+    border-radius: 8px;
+
+    padding: 8px 14px;
+
+    min-height: 22px;
+
+    font-weight: 600;
+}
+
+QPushButton:hover {
+    background-color: #253041;
+    border-color: #475569;
+}
+
+QPushButton:pressed {
+    background-color: #18202B;
+}
+
+QPushButton:disabled {
+    background-color: #161C24;
+
+    color: #566273;
+
+    border-color: #252E3A;
+}
+
+
+/* -------------------------
+   PRIMARY BUTTON
+   START BACKUP
+   ------------------------- */
+
+QPushButton#startBackupButton {
+    background-color: #3B82F6;
+
+    color: white;
+
+    border: 1px solid #3B82F6;
+
+    border-radius: 8px;
+
+    padding: 9px 18px;
+
+    font-weight: 700;
+}
+
+QPushButton#startBackupButton:hover {
+    background-color: #4B8DF8;
+    border-color: #4B8DF8;
+}
+
+QPushButton#startBackupButton:pressed {
+    background-color: #2563EB;
+}
+
+QPushButton#startBackupButton:disabled {
+    background-color: #1E3A5F;
+
+    color: #7188A4;
+
+    border-color: #1E3A5F;
+}
+
+
+/* -------------------------
+   RESTORE BUTTON
+   ------------------------- */
+
+QPushButton#restoreBackupButton {
+    background-color: #2563EB;
+
+    color: white;
+
+    border: 1px solid #2563EB;
+}
+
+QPushButton#restoreBackupButton:hover {
+    background-color: #3B82F6;
+}
+
+QPushButton#restoreBackupButton:pressed {
+    background-color: #1D4ED8;
+}
+
+QPushButton#restoreBackupButton:disabled {
+    background-color: #1D304D;
+
+    color: #64748B;
+
+    border-color: #1D304D;
+}
+
+
+/* -------------------------
+   INTEGRITY BUTTON
+   ------------------------- */
+
+QPushButton#checkIntegrityButton {
+    background-color: #172233;
+
+    color: #93C5FD;
+
+    border: 1px solid #28558C;
+}
+
+QPushButton#checkIntegrityButton:hover {
+    background-color: #1C2C42;
+    border-color: #3B82F6;
+}
+
+QPushButton#checkIntegrityButton:pressed {
+    background-color: #142237;
+}
+
+
+/* -------------------------
+   BROWSE / REFRESH / OPEN
+   ------------------------- */
+
+QPushButton#browseSourceButton,
+QPushButton#browseDestinationButton,
+QPushButton#refreshHistoryButton,
+QPushButton#openBackupButton {
+    background-color: #1D2530;
+
+    color: #CBD5E1;
+
+    border: 1px solid #334155;
+}
+
+QPushButton#browseSourceButton:hover,
+QPushButton#browseDestinationButton:hover,
+QPushButton#refreshHistoryButton:hover,
+QPushButton#openBackupButton:hover {
+    background-color: #273244;
+    color: #FFFFFF;
+}
+
+
+/* -------------------------
+   PROGRESS LABEL
+   ------------------------- */
+
+QLabel#progressLabel {
+    color: #94A3B8;
+    font-size: 9pt;
+}
+
+
+/* -------------------------
+   PROGRESS BAR
+   ------------------------- */
+
+QProgressBar {
+    background-color: #10161E;
+
+    color: #E2E8F0;
+
+    border: 1px solid #293445;
+    border-radius: 7px;
+
+    min-height: 14px;
+    max-height: 14px;
+
+    text-align: center;
+}
+
+QProgressBar::chunk {
+    background-color: #3B82F6;
+
+    border-radius: 6px;
+}
+
+
+/* -------------------------
+   HISTORY SECTION
+   ------------------------- */
+
+QGroupBox#backupHistoryGroup {
+    background-color: transparent;
+
+    border: none;
+
+    color: #F1F5F9;
+
+    font-size: 12pt;
+    font-weight: 700;
+}
+
+
+/* -------------------------
+   TABLE
+   ------------------------- */
+
+QTableWidget {
+    background-color: #141A22;
+
+    alternate-background-color: #171F29;
+
+    color: #CBD5E1;
+
+    border: 1px solid #293445;
+    border-radius: 10px;
+
+    gridline-color: transparent;
+
+    selection-background-color: #203B63;
+    selection-color: #FFFFFF;
+
+    outline: none;
+
+    padding: 2px;
+}
+
+QTableWidget::item {
+    border: none;
+
+    padding: 8px 7px;
+}
+
+QTableWidget::item:hover {
+    background-color: #1D2835;
+}
+
+QTableWidget::item:selected {
+    background-color: #203B63;
+    color: #FFFFFF;
+}
+
+
+/* -------------------------
+   TABLE HEADER
+   ------------------------- */
+
+QHeaderView {
+    background-color: #171D26;
+}
+
+QHeaderView::section {
+    background-color: #171D26;
+
+    color: #94A3B8;
+
+    border: none;
+
+    border-bottom: 1px solid #2B3647;
+
+    padding: 10px 8px;
+
+    font-size: 9pt;
+    font-weight: 700;
+}
+
+
+/* -------------------------
+   TABLE CORNER
+   ------------------------- */
+
+QTableCornerButton::section {
+    background-color: #171D26;
+
+    border: none;
+    border-bottom: 1px solid #2B3647;
+}
+
+
+/* -------------------------
+   SCROLLBARS
+   ------------------------- */
+
+QScrollBar:vertical {
+    background-color: transparent;
+
+    width: 10px;
+
+    margin: 4px 2px;
+}
+
+QScrollBar::handle:vertical {
+    background-color: #344154;
+
+    min-height: 30px;
+
+    border-radius: 4px;
+}
+
+QScrollBar::handle:vertical:hover {
+    background-color: #475569;
+}
+
+QScrollBar::add-line:vertical,
+QScrollBar::sub-line:vertical {
+    height: 0px;
+}
+
+QScrollBar::add-page:vertical,
+QScrollBar::sub-page:vertical {
+    background: transparent;
+}
+
+
+QScrollBar:horizontal {
+    background-color: transparent;
+
+    height: 10px;
+
+    margin: 2px 4px;
+}
+
+QScrollBar::handle:horizontal {
+    background-color: #344154;
+
+    min-width: 30px;
+
+    border-radius: 4px;
+}
+
+QScrollBar::handle:horizontal:hover {
+    background-color: #475569;
+}
+
+QScrollBar::add-line:horizontal,
+QScrollBar::sub-line:horizontal {
+    width: 0px;
+}
+
+QScrollBar::add-page:horizontal,
+QScrollBar::sub-page:horizontal {
+    background: transparent;
+}
+
+
+/* -------------------------
+   STATUS BAR
+   ------------------------- */
+
+QStatusBar {
+    background-color: #0C1117;
+
+    color: #64748B;
+
+    border-top: 1px solid #1F2937;
+}
+
+QStatusBar::item {
+    border: none;
+}
+
+
+/* -------------------------
+   MESSAGE BOXES
+   ------------------------- */
+
+QMessageBox {
+    background-color: #171D26;
+}
+
+QMessageBox QLabel {
+    color: #E2E8F0;
+}
+
+QMessageBox QPushButton {
+    min-width: 85px;
+}
+
+
+/* -------------------------
+   TOOLTIPS
+   ------------------------- */
+
+QToolTip {
+    background-color: #1E293B;
+
+    color: #F8FAFC;
+
+    border: 1px solid #475569;
+
+    padding: 6px;
+
+    border-radius: 4px;
+}

@@ -7,6 +7,8 @@
 #include "core/integrity/IntegrityWorker.h"
 #include <QDesktopServices>
 #include <QUrl>
+#include <QFile>
+#include <QDebug>
 
 
 #include <QDir>

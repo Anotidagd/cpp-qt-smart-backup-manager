@@ -6,125 +6,162 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>900</width>
-    <height>621</height>
+    <width>1100</width>
+    <height>720</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>900</width>
-    <height>600</height>
+    <width>1100</width>
+    <height>720</height>
    </size>
   </property>
   <property name="windowTitle">
    <string>Smart Backup Manager</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color:rgb(28, 38, 51);
+color: rgb(244, 247, 251);</string>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="titleLabel">
     <property name="geometry">
      <rect>
-      <x>80</x>
+      <x>380</x>
       <y>20</y>
-      <width>181</width>
-      <height>16</height>
+      <width>441</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">
      <string>Smart Backup Manager</string>
     </property>
    </widget>
-   <widget class="QLabel" name="subtitleLabel">
-    <property name="geometry">
-     <rect>
-      <x>80</x>
-      <y>40</y>
-      <width>241</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Protect your files and verfiy their intergrity</string>
-    </property>
-   </widget>
    <widget class="QGroupBox" name="backupConfigurationGroup">
     <property name="geometry">
      <rect>
-      <x>80</x>
-      <y>90</y>
-      <width>601</width>
-      <height>191</height>
+      <x>200</x>
+      <y>110</y>
+      <width>671</width>
+      <height>251</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background:#171D26;
+border-color: rgb(41, 52, 69);
+font: 700 9pt &quot;Caviar Dreams&quot;;
+</string>
     </property>
     <property name="title">
      <string>Backup Configuration</string>
     </property>
-    <layout class="QGridLayout" name="gridLayout">
-     <item row="0" column="0">
-      <widget class="QLabel" name="sourceLabel">
-       <property name="text">
-        <string>Source Folder</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLineEdit" name="sourcePathEdit">
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-       <property name="placeholderText">
-        <string>Select the folder you want to protect</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QPushButton" name="browseSourceButton">
-       <property name="text">
-        <string>Browse</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="destinationLabel">
-       <property name="text">
-        <string>Destination Folder</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="0">
-      <widget class="QLineEdit" name="destinationPathEdit">
-       <property name="readOnly">
-        <bool>true</bool>
-       </property>
-       <property name="placeholderText">
-        <string>select where backups should be stored</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="1">
-      <widget class="QPushButton" name="browseDestinationButton">
-       <property name="text">
-        <string>Browse</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="1">
-      <widget class="QPushButton" name="startBackupButton">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="text">
-        <string>Start Backup</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    <widget class="QLabel" name="sourceLabel">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>40</y>
+       <width>81</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Source Folder</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="sourcePathEdit">
+     <property name="geometry">
+      <rect>
+       <x>9</x>
+       <y>65</y>
+       <width>501</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+     <property name="placeholderText">
+      <string>Select the folder you want to protect</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="browseSourceButton">
+     <property name="geometry">
+      <rect>
+       <x>543</x>
+       <y>65</y>
+       <width>80</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Browse</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="destinationLabel">
+     <property name="geometry">
+      <rect>
+       <x>9</x>
+       <y>110</y>
+       <width>105</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Destination Folder</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="startBackupButton">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>448</x>
+       <y>200</y>
+       <width>181</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Start Backup</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="browseDestinationButton">
+     <property name="geometry">
+      <rect>
+       <x>540</x>
+       <y>140</y>
+       <width>80</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Browse</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="destinationPathEdit">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>140</y>
+       <width>501</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+     <property name="placeholderText">
+      <string>select where backups should be stored</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QLabel" name="progressLabel">
     <property name="geometry">
      <rect>
-      <x>80</x>
-      <y>290</y>
-      <width>141</width>
+      <x>200</x>
+      <y>370</y>
+      <width>281</width>
       <height>16</height>
      </rect>
     </property>
@@ -135,8 +172,8 @@
    <widget class="QProgressBar" name="backupProgressBar">
     <property name="geometry">
      <rect>
-      <x>80</x>
-      <y>310</y>
+      <x>200</x>
+      <y>390</y>
       <width>561</width>
       <height>23</height>
      </rect>
@@ -151,11 +188,16 @@
    <widget class="QGroupBox" name="backupHistoryGroup">
     <property name="geometry">
      <rect>
-      <x>80</x>
-      <y>340</y>
-      <width>641</width>
-      <height>231</height>
+      <x>200</x>
+      <y>420</y>
+      <width>671</width>
+      <height>261</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background:#171D26;
+border-color: rgb(41, 52, 69);
+font: 700 9pt &quot;Caviar Dreams&quot;;</string>
     </property>
     <property name="title">
      <string>Backup History</string>
@@ -163,9 +205,9 @@
     <widget class="QPushButton" name="refreshHistoryButton">
      <property name="geometry">
       <rect>
-       <x>520</x>
-       <y>27</y>
-       <width>91</width>
+       <x>490</x>
+       <y>20</y>
+       <width>121</width>
        <height>21</height>
       </rect>
      </property>
@@ -177,10 +219,16 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>50</y>
+       <y>70</y>
        <width>601</width>
        <height>131</height>
       </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background:#171D26;
+background:#171D26;
+border-color: rgb(41, 52, 69);
+font: 700 9pt &quot;Caviar Dreams&quot;;</string>
      </property>
      <property name="columnCount">
       <number>9</number>
@@ -233,9 +281,9 @@
      </property>
      <property name="geometry">
       <rect>
-       <x>229</x>
-       <y>190</y>
-       <width>111</width>
+       <x>110</x>
+       <y>220</y>
+       <width>161</width>
        <height>21</height>
       </rect>
      </property>
@@ -249,9 +297,9 @@
      </property>
      <property name="geometry">
       <rect>
-       <x>350</x>
-       <y>190</y>
-       <width>151</width>
+       <x>280</x>
+       <y>220</y>
+       <width>181</width>
        <height>21</height>
       </rect>
      </property>
@@ -262,9 +310,9 @@
     <widget class="QPushButton" name="checkIntegrityButton">
      <property name="geometry">
       <rect>
-       <x>510</x>
-       <y>190</y>
-       <width>101</width>
+       <x>480</x>
+       <y>220</y>
+       <width>131</width>
        <height>21</height>
       </rect>
      </property>
@@ -273,13 +321,26 @@
      </property>
     </widget>
    </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>460</x>
+      <y>60</y>
+      <width>221</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Backup • Restore • Integrity</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>900</width>
+     <width>1100</width>
      <height>21</height>
     </rect>
    </property>
