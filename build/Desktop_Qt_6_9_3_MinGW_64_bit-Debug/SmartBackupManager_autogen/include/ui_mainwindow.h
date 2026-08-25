@@ -62,10 +62,10 @@ public:
         centralwidget->setObjectName("centralwidget");
         titleLabel = new QLabel(centralwidget);
         titleLabel->setObjectName("titleLabel");
-        titleLabel->setGeometry(QRect(380, 20, 441, 41));
+        titleLabel->setGeometry(QRect(390, 10, 441, 41));
         backupConfigurationGroup = new QGroupBox(centralwidget);
         backupConfigurationGroup->setObjectName("backupConfigurationGroup");
-        backupConfigurationGroup->setGeometry(QRect(200, 110, 671, 251));
+        backupConfigurationGroup->setGeometry(QRect(210, 80, 671, 251));
         backupConfigurationGroup->setStyleSheet(QString::fromUtf8("background:#171D26;\n"
 "border-color: rgb(41, 52, 69);\n"
 "font: 700 9pt \"Caviar Dreams\";\n"
@@ -96,15 +96,15 @@ public:
         destinationPathEdit->setReadOnly(true);
         progressLabel = new QLabel(centralwidget);
         progressLabel->setObjectName("progressLabel");
-        progressLabel->setGeometry(QRect(200, 370, 281, 16));
+        progressLabel->setGeometry(QRect(210, 340, 281, 16));
         backupProgressBar = new QProgressBar(centralwidget);
         backupProgressBar->setObjectName("backupProgressBar");
-        backupProgressBar->setGeometry(QRect(200, 390, 561, 23));
+        backupProgressBar->setGeometry(QRect(210, 360, 561, 23));
         backupProgressBar->setMaximum(0);
         backupProgressBar->setValue(0);
         backupHistoryGroup = new QGroupBox(centralwidget);
         backupHistoryGroup->setObjectName("backupHistoryGroup");
-        backupHistoryGroup->setGeometry(QRect(200, 420, 671, 261));
+        backupHistoryGroup->setGeometry(QRect(210, 390, 671, 261));
         backupHistoryGroup->setStyleSheet(QString::fromUtf8("background:#171D26;\n"
 "border-color: rgb(41, 52, 69);\n"
 "font: 700 9pt \"Caviar Dreams\";"));
@@ -150,7 +150,7 @@ public:
         checkIntegrityButton->setGeometry(QRect(480, 220, 131, 21));
         label = new QLabel(centralwidget);
         label->setObjectName("label");
-        label->setGeometry(QRect(460, 60, 221, 16));
+        label->setGeometry(QRect(470, 50, 221, 16));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");

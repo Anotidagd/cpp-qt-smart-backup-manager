@@ -1372,11 +1372,8 @@ void MainWindow::checkSelectedBackupIntegrity()
     const QString backupPath =
         selectedBackupPath();
 
-    const QString sourcePath =
-        selectedSourcePath();
 
-    if (backupPath.isEmpty() ||
-        sourcePath.isEmpty()) {
+    if (backupPath.isEmpty()) {
 
         QMessageBox::warning(
             this,
@@ -1403,18 +1400,7 @@ void MainWindow::checkSelectedBackupIntegrity()
         return;
     }
 
-    if (!QDir(sourcePath).exists()) {
 
-        QMessageBox::warning(
-            this,
-            tr("Source Not Found"),
-            tr(
-                "The original source directory no longer exists:\n\n%1"
-                ).arg(sourcePath)
-            );
-
-        return;
-    }
 
     const QString manifestPath =
         QDir(backupPath).filePath(
@@ -1470,7 +1456,7 @@ void MainWindow::checkSelectedBackupIntegrity()
 
     m_integrityWorker =
         new IntegrityWorker(
-            sourcePath,
+            backupPath,
             backupPath
             );
 

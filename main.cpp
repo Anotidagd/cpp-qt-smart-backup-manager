@@ -3,10 +3,12 @@
 #include <QApplication>
 #include <QDebug>
 #include <QFile>
+#include <QIcon>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
 
     QCoreApplication::setOrganizationName(
         "AGD Developer"
@@ -14,6 +16,10 @@ int main(int argc, char *argv[])
 
     QCoreApplication::setApplicationName(
         "SmartBackupManager"
+        );
+
+    a.setWindowIcon(
+        QIcon(":icons/app.ico")
         );
 
     QFile styleFile(

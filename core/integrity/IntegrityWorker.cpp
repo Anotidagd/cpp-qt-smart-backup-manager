@@ -17,7 +17,7 @@ void IntegrityWorker::process()
 
     const IntegrityResult result =
         service.checkIntegrity(
-            m_sourcePath,
+            m_backupPath,
             m_backupPath,
 
             [this](

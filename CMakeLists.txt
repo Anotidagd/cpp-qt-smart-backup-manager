@@ -33,6 +33,7 @@ qt_add_executable(SmartBackupManager
     core/integrity/IntegrityWorker.cpp
     resources/styles/main.qss
     resources/resources.qrc
+    app.rc
 
 
 )

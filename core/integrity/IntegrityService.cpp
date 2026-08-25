@@ -76,6 +76,11 @@ bool IntegrityService::createManifest(
         if (fileInfo.isSymLink()) {
             continue;
         }
+        if (fileInfo.fileName() ==
+            ".integrity_manifest.json") {
+
+            continue;
+        }
 
         const HashResult hashResult =
             hashService.calculateSha256(
