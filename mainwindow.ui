@@ -24,7 +24,7 @@
     <property name="geometry">
      <rect>
       <x>80</x>
-      <y>40</y>
+      <y>20</y>
       <width>181</width>
       <height>16</height>
      </rect>
@@ -37,7 +37,7 @@
     <property name="geometry">
      <rect>
       <x>80</x>
-      <y>60</y>
+      <y>40</y>
       <width>241</width>
       <height>16</height>
      </rect>
@@ -50,7 +50,7 @@
     <property name="geometry">
      <rect>
       <x>80</x>
-      <y>110</y>
+      <y>90</y>
       <width>601</width>
       <height>191</height>
      </rect>
@@ -123,7 +123,7 @@
     <property name="geometry">
      <rect>
       <x>80</x>
-      <y>310</y>
+      <y>290</y>
       <width>71</width>
       <height>16</height>
      </rect>
@@ -136,7 +136,7 @@
     <property name="geometry">
      <rect>
       <x>80</x>
-      <y>330</y>
+      <y>310</y>
       <width>561</width>
       <height>23</height>
      </rect>
@@ -152,9 +152,9 @@
     <property name="geometry">
      <rect>
       <x>80</x>
-      <y>350</y>
+      <y>340</y>
       <width>641</width>
-      <height>201</height>
+      <height>231</height>
      </rect>
     </property>
     <property name="title">
@@ -227,38 +227,51 @@
      </column>
      <column/>
     </widget>
-   </widget>
-   <widget class="QPushButton" name="restoreBackupButton">
-    <property name="enabled">
-     <bool>false</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>570</x>
-      <y>550</y>
-      <width>151</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Restore Selected Backup</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="openBackupButton">
-    <property name="enabled">
-     <bool>false</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>480</x>
-      <y>550</y>
-      <width>80</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Backup folder</string>
-    </property>
+    <widget class="QPushButton" name="openBackupButton">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>229</x>
+       <y>190</y>
+       <width>111</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Open Backup folder</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="restoreBackupButton">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>350</x>
+       <y>190</y>
+       <width>151</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Restore Selected Backup</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="checkIntegrityButton">
+     <property name="geometry">
+      <rect>
+       <x>510</x>
+       <y>190</y>
+       <width>101</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Check Integrity</string>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

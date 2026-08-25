@@ -7,6 +7,7 @@
 
 #include <functional>
 
+
 struct IntegrityResult
 {
     bool success = false;

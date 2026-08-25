@@ -4,6 +4,7 @@
 #include "core/backup/BackupService.h"
 #include "core/backup/BackupWorker.h"
 #include "core/restore/RestoreWorker.h"
+#include "core/integrity/IntegrityWorker.h"
 #include <QDesktopServices>
 #include <QUrl>
 
@@ -87,7 +88,7 @@ bool isSameOrChildDirectory(
 
 } // namespace
 
-
+//the constructor is here , remebmer that..
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -109,9 +110,18 @@ MainWindow::MainWindow(QWidget *parent)
         qWarning()
             << databaseError;
     }
+    qRegisterMetaType<BackupResult>(
+        "BackupResult"
+        );
+
     qRegisterMetaType<RestoreResult>(
         "RestoreResult"
         );
+
+    qRegisterMetaType<IntegrityResult>(
+        "IntegrityResult"
+        );
+
     ///////
     ui->openBackupButton->setEnabled(false);
     ui->restoreBackupButton->setEnabled(false);
@@ -193,7 +203,12 @@ MainWindow::MainWindow(QWidget *parent)
     ui->progressLabel->setText(
         "Ready"
         );
-
+    connect(
+        ui->checkIntegrityButton,
+        &QPushButton::clicked,
+        this,
+        &MainWindow::checkSelectedBackupIntegrity
+        );
     connect(
         ui->browseSourceButton,
         &QPushButton::clicked,
@@ -304,9 +319,14 @@ void MainWindow::updateStartButtonState()
 
     // Important:
     // Never enable Start while backup is running.
+    const bool operationRunning =
+        m_backupRunning ||
+        m_restoreRunning ||
+        m_integrityRunning;
+
     ui->startBackupButton->setEnabled(
         pathsAreValid &&
-        !m_backupRunning
+        !operationRunning
         );
 
     if (pathsAreValid) {
@@ -439,7 +459,10 @@ void MainWindow::handleStartBackup()
     }
 
     // Prevent double-starting.
-    if (m_backupRunning) {
+    if (m_backupRunning ||
+        m_restoreRunning ||
+        m_integrityRunning) {
+
         return;
     }
 
@@ -1000,12 +1023,23 @@ void MainWindow::handleHistorySelection()
     const bool hasSelection =
         !ui->historyTable->selectedItems().isEmpty();
 
+    const bool operationRunning =
+        m_backupRunning ||
+        m_restoreRunning ||
+        m_integrityRunning;
+
     ui->openBackupButton->setEnabled(
         hasSelection
         );
 
     ui->restoreBackupButton->setEnabled(
-        hasSelection
+        hasSelection &&
+        !operationRunning
+        );
+
+    ui->checkIntegrityButton->setEnabled(
+        hasSelection &&
+        !operationRunning
         );
 }
 QString MainWindow::selectedBackupPath() const
@@ -1035,7 +1069,8 @@ QString MainWindow::selectedBackupPath() const
 void MainWindow::restoreSelectedBackup()
 {
     if (m_backupRunning ||
-        m_restoreRunning) {
+        m_restoreRunning ||
+        m_integrityRunning) {
 
         return;
     }
@@ -1300,4 +1335,434 @@ void MainWindow::openSelectedBackupFolder()
             backupPath
             )
         );
+}
+QString MainWindow::selectedSourcePath() const
+{
+    const int row =
+        ui->historyTable->currentRow();
+
+    if (row < 0) {
+        return {};
+    }
+
+    QTableWidgetItem *sourceItem =
+        ui->historyTable->item(
+            row,
+            2
+            );
+
+    if (sourceItem == nullptr) {
+        return {};
+    }
+
+    return sourceItem
+        ->data(Qt::UserRole + 2)
+        .toString();
+}
+///////////////////////////////////////////////////
+void MainWindow::checkSelectedBackupIntegrity()
+{
+    if (m_backupRunning ||
+        m_restoreRunning ||
+        m_integrityRunning) {
+
+        return;
+    }
+
+    const QString backupPath =
+        selectedBackupPath();
+
+    const QString sourcePath =
+        selectedSourcePath();
+
+    if (backupPath.isEmpty() ||
+        sourcePath.isEmpty()) {
+
+        QMessageBox::warning(
+            this,
+            tr("Integrity Check"),
+            tr(
+                "The selected backup does not contain enough information "
+                "to perform an integrity scan."
+                )
+            );
+
+        return;
+    }
+
+    if (!QDir(backupPath).exists()) {
+
+        QMessageBox::warning(
+            this,
+            tr("Backup Not Found"),
+            tr(
+                "The selected backup directory no longer exists:\n\n%1"
+                ).arg(backupPath)
+            );
+
+        return;
+    }
+
+    if (!QDir(sourcePath).exists()) {
+
+        QMessageBox::warning(
+            this,
+            tr("Source Not Found"),
+            tr(
+                "The original source directory no longer exists:\n\n%1"
+                ).arg(sourcePath)
+            );
+
+        return;
+    }
+
+    const QString manifestPath =
+        QDir(backupPath).filePath(
+            ".integrity_manifest.json"
+            );
+
+    if (!QFileInfo::exists(
+            manifestPath
+            )) {
+
+        QMessageBox::warning(
+            this,
+            tr("Manifest Not Found"),
+            tr(
+                "This backup does not contain an integrity manifest.\n\n"
+                "Older backups created before integrity tracking was added "
+                "cannot be scanned."
+                )
+            );
+
+        return;
+    }
+
+    m_integrityRunning = true;
+
+    ui->checkIntegrityButton->setEnabled(
+        false
+        );
+
+    ui->restoreBackupButton->setEnabled(
+        false
+        );
+
+    ui->startBackupButton->setEnabled(
+        false
+        );
+
+    ui->backupProgressBar->setRange(
+        0,
+        0
+        );
+
+    ui->progressLabel->setText(
+        "Preparing integrity scan..."
+        );
+
+    statusBar()->showMessage(
+        "Preparing integrity scan..."
+        );
+
+    m_integrityThread =
+        new QThread(this);
+
+    m_integrityWorker =
+        new IntegrityWorker(
+            sourcePath,
+            backupPath
+            );
+
+    m_integrityWorker->moveToThread(
+        m_integrityThread
+        );
+
+    connect(
+        m_integrityThread,
+        &QThread::started,
+        m_integrityWorker,
+        &IntegrityWorker::process
+        );
+
+    connect(
+        m_integrityWorker,
+        &IntegrityWorker::progressChanged,
+        this,
+        &MainWindow::handleIntegrityProgress
+        );
+
+    connect(
+        m_integrityWorker,
+        &IntegrityWorker::finished,
+        this,
+        &MainWindow::handleIntegrityFinished
+        );
+
+    connect(
+        m_integrityWorker,
+        &IntegrityWorker::finished,
+        m_integrityThread,
+        &QThread::quit
+        );
+
+    connect(
+        m_integrityWorker,
+        &IntegrityWorker::finished,
+        m_integrityWorker,
+        &QObject::deleteLater
+        );
+
+    connect(
+        m_integrityThread,
+        &QThread::finished,
+        m_integrityThread,
+        &QObject::deleteLater
+        );
+
+    connect(
+        m_integrityThread,
+        &QThread::finished,
+        this,
+        [this]()
+        {
+            m_integrityThread = nullptr;
+            m_integrityWorker = nullptr;
+        }
+        );
+
+    m_integrityThread->start();
+}
+//////////////////////////////////////////////////////////////////////
+void MainWindow::handleIntegrityProgress(
+    int processedFiles,
+    int totalFiles,
+    const QString &currentFile
+    )
+{
+    if (totalFiles <= 0) {
+
+        ui->backupProgressBar->setRange(
+            0,
+            0
+            );
+
+        ui->progressLabel->setText(
+            "Preparing integrity scan..."
+            );
+
+        return;
+    }
+
+    ui->backupProgressBar->setRange(
+        0,
+        totalFiles
+        );
+
+    ui->backupProgressBar->setValue(
+        processedFiles
+        );
+
+    if (currentFile.isEmpty()) {
+
+        ui->progressLabel->setText(
+            QString(
+                "Integrity scan: %1 / %2 files"
+                )
+                .arg(processedFiles)
+                .arg(totalFiles)
+            );
+
+        return;
+    }
+
+    ui->progressLabel->setText(
+        QString(
+            "Scanning %1 / %2 — %3"
+            )
+            .arg(processedFiles)
+            .arg(totalFiles)
+            .arg(currentFile)
+        );
+
+    statusBar()->showMessage(
+        QString(
+            "Checking %1"
+            ).arg(currentFile)
+        );
+}
+/////////////////////////////////////////////////////////////////////////////////////
+void MainWindow::handleIntegrityFinished(
+    const IntegrityResult &result
+    )
+{
+    m_integrityRunning = false;
+
+    updateStartButtonState();
+    handleHistorySelection();
+
+    if (ui->backupProgressBar->maximum() > 0) {
+
+        ui->backupProgressBar->setValue(
+            ui->backupProgressBar->maximum()
+            );
+    }
+
+    if (!result.success) {
+
+        ui->progressLabel->setText(
+            "Integrity scan completed with errors."
+            );
+
+        statusBar()->showMessage(
+            "Integrity scan completed with errors."
+            );
+
+        QString details;
+
+        if (!result.errors.isEmpty()) {
+            details =
+                result.errors.join("\n");
+        }
+
+        QMessageBox messageBox(this);
+
+        messageBox.setIcon(
+            QMessageBox::Warning
+            );
+
+        messageBox.setWindowTitle(
+            tr("Integrity Scan Error")
+            );
+
+        messageBox.setText(
+            tr(
+                "The integrity scan could not complete cleanly.\n\n"
+                "Failed files: %1"
+                )
+                .arg(result.failedFiles)
+            );
+
+        if (!details.isEmpty()) {
+            messageBox.setDetailedText(
+                details
+                );
+        }
+
+        messageBox.exec();
+
+        return;
+    }
+
+    const bool changesDetected =
+        result.modifiedFiles > 0 ||
+        result.missingFiles > 0 ||
+        result.newFiles > 0;
+
+    if (changesDetected) {
+
+        ui->progressLabel->setText(
+            "Integrity changes detected."
+            );
+
+        statusBar()->showMessage(
+            "Integrity scan detected file changes."
+            );
+
+    } else {
+
+        ui->progressLabel->setText(
+            "Integrity verified — no changes detected."
+            );
+
+        statusBar()->showMessage(
+            "Integrity verified."
+            );
+    }
+
+    QStringList details;
+
+    if (!result.modifiedPaths.isEmpty()) {
+
+        details.append(
+            "MODIFIED FILES"
+            );
+
+        for (const QString &path :
+             result.modifiedPaths) {
+
+            details.append(
+                "  " + path
+                );
+        }
+
+        details.append("");
+    }
+
+    if (!result.missingPaths.isEmpty()) {
+
+        details.append(
+            "MISSING FILES"
+            );
+
+        for (const QString &path :
+             result.missingPaths) {
+
+            details.append(
+                "  " + path
+                );
+        }
+
+        details.append("");
+    }
+
+    if (!result.newPaths.isEmpty()) {
+
+        details.append(
+            "NEW FILES"
+            );
+
+        for (const QString &path :
+             result.newPaths) {
+
+            details.append(
+                "  " + path
+                );
+        }
+    }
+
+    QMessageBox messageBox(this);
+
+    messageBox.setWindowTitle(
+        tr("Integrity Scan Complete")
+        );
+
+    messageBox.setIcon(
+        changesDetected
+            ? QMessageBox::Warning
+            : QMessageBox::Information
+        );
+
+    messageBox.setText(
+        tr(
+            "Integrity scan completed.\n\n"
+            "Unchanged: %1\n"
+            "Modified: %2\n"
+            "Missing: %3\n"
+            "New: %4"
+            )
+            .arg(result.unchangedFiles)
+            .arg(result.modifiedFiles)
+            .arg(result.missingFiles)
+            .arg(result.newFiles)
+        );
+
+    if (!details.isEmpty()) {
+
+        messageBox.setDetailedText(
+            details.join("\n")
+            );
+    }
+
+    messageBox.exec();
 }

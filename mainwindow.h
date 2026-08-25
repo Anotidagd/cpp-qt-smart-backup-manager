@@ -8,6 +8,7 @@
 #include "database/DatabaseManager.h"
 #include <QDateTime>
 #include "core/restore/RestoreService.h"
+#include "core/integrity/IntegrityService.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -18,6 +19,7 @@ QT_END_NAMESPACE
 class QThread;
 class BackupWorker;
 class RestoreWorker;
+class IntegrityWorker;
 
 class MainWindow : public QMainWindow
 {
@@ -56,27 +58,38 @@ private slots:
         const RestoreResult &result
         );
 
+    void checkSelectedBackupIntegrity();
+
+    void handleIntegrityProgress(
+        int processedFiles,
+        int totalFiles,
+        const QString &currentFile
+        );
+
+    void handleIntegrityFinished(
+        const IntegrityResult &result
+        );
+
 private:
     bool validatePaths(
         QString *errorMessage = nullptr
         ) const;
 
     Ui::MainWindow *ui;
-
     QThread *m_backupThread = nullptr;
     BackupWorker *m_backupWorker = nullptr;
-
     bool m_backupRunning = false;
     DatabaseManager m_databaseManager;
-
     bool m_databaseAvailable = false;
-
     QDateTime m_backupStartedAt;
     QString selectedBackupPath() const;
     QThread *m_restoreThread = nullptr;
     RestoreWorker *m_restoreWorker = nullptr;
-
+    QString selectedSourcePath() const;
     bool m_restoreRunning = false;
+    QThread *m_integrityThread = nullptr;
+    IntegrityWorker *m_integrityWorker = nullptr;
+    bool m_integrityRunning = false;
 
 
 

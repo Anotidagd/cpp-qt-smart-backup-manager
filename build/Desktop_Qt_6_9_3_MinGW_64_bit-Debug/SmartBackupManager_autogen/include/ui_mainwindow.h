@@ -46,8 +46,9 @@ public:
     QGroupBox *backupHistoryGroup;
     QPushButton *refreshHistoryButton;
     QTableWidget *historyTable;
-    QPushButton *restoreBackupButton;
     QPushButton *openBackupButton;
+    QPushButton *restoreBackupButton;
+    QPushButton *checkIntegrityButton;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -61,13 +62,13 @@ public:
         centralwidget->setObjectName("centralwidget");
         titleLabel = new QLabel(centralwidget);
         titleLabel->setObjectName("titleLabel");
-        titleLabel->setGeometry(QRect(80, 40, 181, 16));
+        titleLabel->setGeometry(QRect(80, 20, 181, 16));
         subtitleLabel = new QLabel(centralwidget);
         subtitleLabel->setObjectName("subtitleLabel");
-        subtitleLabel->setGeometry(QRect(80, 60, 241, 16));
+        subtitleLabel->setGeometry(QRect(80, 40, 241, 16));
         backupConfigurationGroup = new QGroupBox(centralwidget);
         backupConfigurationGroup->setObjectName("backupConfigurationGroup");
-        backupConfigurationGroup->setGeometry(QRect(80, 110, 601, 191));
+        backupConfigurationGroup->setGeometry(QRect(80, 90, 601, 191));
         gridLayout = new QGridLayout(backupConfigurationGroup);
         gridLayout->setObjectName("gridLayout");
         sourceLabel = new QLabel(backupConfigurationGroup);
@@ -110,15 +111,15 @@ public:
 
         progressLabel = new QLabel(centralwidget);
         progressLabel->setObjectName("progressLabel");
-        progressLabel->setGeometry(QRect(80, 310, 71, 16));
+        progressLabel->setGeometry(QRect(80, 290, 71, 16));
         backupProgressBar = new QProgressBar(centralwidget);
         backupProgressBar->setObjectName("backupProgressBar");
-        backupProgressBar->setGeometry(QRect(80, 330, 561, 23));
+        backupProgressBar->setGeometry(QRect(80, 310, 561, 23));
         backupProgressBar->setMaximum(0);
         backupProgressBar->setValue(0);
         backupHistoryGroup = new QGroupBox(centralwidget);
         backupHistoryGroup->setObjectName("backupHistoryGroup");
-        backupHistoryGroup->setGeometry(QRect(80, 350, 641, 201));
+        backupHistoryGroup->setGeometry(QRect(80, 340, 641, 231));
         refreshHistoryButton = new QPushButton(backupHistoryGroup);
         refreshHistoryButton->setObjectName("refreshHistoryButton");
         refreshHistoryButton->setGeometry(QRect(520, 27, 91, 21));
@@ -144,14 +145,17 @@ public:
         historyTable->setObjectName("historyTable");
         historyTable->setGeometry(QRect(10, 50, 601, 131));
         historyTable->setColumnCount(9);
-        restoreBackupButton = new QPushButton(centralwidget);
-        restoreBackupButton->setObjectName("restoreBackupButton");
-        restoreBackupButton->setEnabled(false);
-        restoreBackupButton->setGeometry(QRect(570, 550, 151, 21));
-        openBackupButton = new QPushButton(centralwidget);
+        openBackupButton = new QPushButton(backupHistoryGroup);
         openBackupButton->setObjectName("openBackupButton");
         openBackupButton->setEnabled(false);
-        openBackupButton->setGeometry(QRect(480, 550, 80, 21));
+        openBackupButton->setGeometry(QRect(229, 190, 111, 21));
+        restoreBackupButton = new QPushButton(backupHistoryGroup);
+        restoreBackupButton->setObjectName("restoreBackupButton");
+        restoreBackupButton->setEnabled(false);
+        restoreBackupButton->setGeometry(QRect(350, 190, 151, 21));
+        checkIntegrityButton = new QPushButton(backupHistoryGroup);
+        checkIntegrityButton->setObjectName("checkIntegrityButton");
+        checkIntegrityButton->setGeometry(QRect(510, 190, 101, 21));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName("menubar");
@@ -198,8 +202,9 @@ public:
         ___qtablewidgetitem6->setText(QCoreApplication::translate("MainWindow", "Failed", nullptr));
         QTableWidgetItem *___qtablewidgetitem7 = historyTable->horizontalHeaderItem(7);
         ___qtablewidgetitem7->setText(QCoreApplication::translate("MainWindow", "Duration", nullptr));
+        openBackupButton->setText(QCoreApplication::translate("MainWindow", "Open Backup folder", nullptr));
         restoreBackupButton->setText(QCoreApplication::translate("MainWindow", "Restore Selected Backup", nullptr));
-        openBackupButton->setText(QCoreApplication::translate("MainWindow", "Backup folder", nullptr));
+        checkIntegrityButton->setText(QCoreApplication::translate("MainWindow", "Check Integrity", nullptr));
     } // retranslateUi
 
 };
